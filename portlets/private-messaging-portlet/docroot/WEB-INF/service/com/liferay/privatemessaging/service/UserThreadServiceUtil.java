@@ -17,8 +17,8 @@ package com.liferay.privatemessaging.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
+import com.liferay.portal.kernel.service.InvokableService;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.InvokableService;
 
 /**
  * Provides the remote service utility for UserThread. This utility wraps
@@ -41,7 +41,7 @@ public class UserThreadServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.privatemessaging.service.impl.UserThreadServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portlet.messageboards.model.MBMessage getLastThreadMessage(
+	public static com.liferay.message.boards.kernel.model.MBMessage getLastThreadMessage(
 		long mbThreadId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getLastThreadMessage(mbThreadId);
@@ -56,7 +56,7 @@ public class UserThreadServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getThreadMessages(
+	public static java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getThreadMessages(
 		long mbThreadId, int start, int end, boolean ascending)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getThreadMessages(mbThreadId, start, end, ascending);
@@ -69,7 +69,7 @@ public class UserThreadServiceUtil {
 
 	public static java.util.List<com.liferay.privatemessaging.model.UserThread> getUserUserThreads(
 		boolean deleted)
-		throws com.liferay.portal.security.auth.PrincipalException {
+		throws com.liferay.portal.kernel.security.auth.PrincipalException {
 		return getService().getUserUserThreads(deleted);
 	}
 
@@ -100,13 +100,6 @@ public class UserThreadServiceUtil {
 		}
 
 		return _service;
-	}
-
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(UserThreadService service) {
 	}
 
 	private static UserThreadService _service;

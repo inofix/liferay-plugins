@@ -18,9 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.twitter.model.Feed;
 
@@ -47,35 +47,35 @@ public class FeedUtil {
 	 */
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#clearCache()
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
 		getPersistence().clearCache();
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#clearCache(com.liferay.portal.model.BaseModel)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache(com.liferay.portal.kernel.model.BaseModel)
 	 */
 	public static void clearCache(Feed feed) {
 		getPersistence().clearCache(feed);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
 	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<Feed> findWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<Feed> findWithDynamicQuery(DynamicQuery dynamicQuery,
 		int start, int end) {
@@ -83,7 +83,7 @@ public class FeedUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
 	 */
 	public static List<Feed> findWithDynamicQuery(DynamicQuery dynamicQuery,
 		int start, int end, OrderByComparator<Feed> orderByComparator) {
@@ -93,14 +93,14 @@ public class FeedUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel)
 	 */
 	public static Feed update(Feed feed) {
 		return getPersistence().update(feed);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel, ServiceContext)
 	 */
 	public static Feed update(Feed feed, ServiceContext serviceContext) {
 		return getPersistence().update(feed, serviceContext);
@@ -116,7 +116,7 @@ public class FeedUtil {
 	*/
 	public static Feed findByU_TSN(long userId,
 		java.lang.String twitterScreenName)
-		throws com.liferay.twitter.NoSuchFeedException {
+		throws com.liferay.twitter.exception.NoSuchFeedException {
 		return getPersistence().findByU_TSN(userId, twitterScreenName);
 	}
 
@@ -155,7 +155,7 @@ public class FeedUtil {
 	*/
 	public static Feed removeByU_TSN(long userId,
 		java.lang.String twitterScreenName)
-		throws com.liferay.twitter.NoSuchFeedException {
+		throws com.liferay.twitter.exception.NoSuchFeedException {
 		return getPersistence().removeByU_TSN(userId, twitterScreenName);
 	}
 
@@ -207,7 +207,7 @@ public class FeedUtil {
 	* @throws NoSuchFeedException if a feed with the primary key could not be found
 	*/
 	public static Feed remove(long feedId)
-		throws com.liferay.twitter.NoSuchFeedException {
+		throws com.liferay.twitter.exception.NoSuchFeedException {
 		return getPersistence().remove(feedId);
 	}
 
@@ -223,7 +223,7 @@ public class FeedUtil {
 	* @throws NoSuchFeedException if a feed with the primary key could not be found
 	*/
 	public static Feed findByPrimaryKey(long feedId)
-		throws com.liferay.twitter.NoSuchFeedException {
+		throws com.liferay.twitter.exception.NoSuchFeedException {
 		return getPersistence().findByPrimaryKey(feedId);
 	}
 
@@ -327,13 +327,6 @@ public class FeedUtil {
 		}
 
 		return _persistence;
-	}
-
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(FeedPersistence persistence) {
 	}
 
 	private static FeedPersistence _persistence;

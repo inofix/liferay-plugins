@@ -16,7 +16,7 @@ package com.liferay.privatemessaging.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link UserThreadLocalService}.
@@ -34,21 +34,21 @@ public class UserThreadLocalServiceWrapper implements UserThreadLocalService,
 	}
 
 	@Override
-	public com.liferay.portlet.messageboards.model.MBMessage addPrivateMessage(
+	public com.liferay.message.boards.kernel.model.MBMessage addPrivateMessage(
 		long userId, long mbThreadId, java.lang.String to,
 		java.lang.String subject, java.lang.String body,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userThreadLocalService.addPrivateMessage(userId, mbThreadId,
 			to, subject, body, inputStreamOVPs, themeDisplay);
 	}
 
 	@Override
-	public com.liferay.portlet.messageboards.model.MBMessage addPrivateMessageBranch(
+	public com.liferay.message.boards.kernel.model.MBMessage addPrivateMessageBranch(
 		long userId, long parentMBMessageId, java.lang.String body,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userThreadLocalService.addPrivateMessageBranch(userId,
 			parentMBMessageId, body, inputStreamOVPs, themeDisplay);
@@ -90,8 +90,8 @@ public class UserThreadLocalServiceWrapper implements UserThreadLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userThreadLocalService.deletePersistedModel(persistedModel);
 	}
@@ -238,6 +238,11 @@ public class UserThreadLocalServiceWrapper implements UserThreadLocalService,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _userThreadLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	@Override
 	public java.util.List<com.liferay.privatemessaging.model.UserThread> getMBThreadUserThreads(
 		long mbThreadId) {
 		return _userThreadLocalService.getMBThreadUserThreads(mbThreadId);
@@ -254,7 +259,7 @@ public class UserThreadLocalServiceWrapper implements UserThreadLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userThreadLocalService.getPersistedModel(primaryKeyObj);
@@ -359,7 +364,7 @@ public class UserThreadLocalServiceWrapper implements UserThreadLocalService,
 	}
 
 	@Override
-	public void updateUserName(com.liferay.portal.model.User user) {
+	public void updateUserName(com.liferay.portal.kernel.model.User user) {
 		_userThreadLocalService.updateUserName(user);
 	}
 
@@ -373,23 +378,6 @@ public class UserThreadLocalServiceWrapper implements UserThreadLocalService,
 	public com.liferay.privatemessaging.model.UserThread updateUserThread(
 		com.liferay.privatemessaging.model.UserThread userThread) {
 		return _userThreadLocalService.updateUserThread(userThread);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public UserThreadLocalService getWrappedUserThreadLocalService() {
-		return _userThreadLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedUserThreadLocalService(
-		UserThreadLocalService userThreadLocalService) {
-		_userThreadLocalService = userThreadLocalService;
 	}
 
 	@Override

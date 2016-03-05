@@ -20,9 +20,9 @@ import com.liferay.chat.model.Status;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.ServiceContext;
 
 import java.util.List;
 
@@ -47,35 +47,35 @@ public class StatusUtil {
 	 */
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#clearCache()
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
 		getPersistence().clearCache();
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#clearCache(com.liferay.portal.model.BaseModel)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache(com.liferay.portal.kernel.model.BaseModel)
 	 */
 	public static void clearCache(Status status) {
 		getPersistence().clearCache(status);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
 	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<Status> findWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<Status> findWithDynamicQuery(DynamicQuery dynamicQuery,
 		int start, int end) {
@@ -83,7 +83,7 @@ public class StatusUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
 	 */
 	public static List<Status> findWithDynamicQuery(DynamicQuery dynamicQuery,
 		int start, int end, OrderByComparator<Status> orderByComparator) {
@@ -93,14 +93,14 @@ public class StatusUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel)
 	 */
 	public static Status update(Status status) {
 		return getPersistence().update(status);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel, ServiceContext)
 	 */
 	public static Status update(Status status, ServiceContext serviceContext) {
 		return getPersistence().update(status, serviceContext);
@@ -114,7 +114,7 @@ public class StatusUtil {
 	* @throws NoSuchStatusException if a matching status could not be found
 	*/
 	public static Status findByUserId(long userId)
-		throws com.liferay.chat.NoSuchStatusException {
+		throws com.liferay.chat.exception.NoSuchStatusException {
 		return getPersistence().findByUserId(userId);
 	}
 
@@ -146,7 +146,7 @@ public class StatusUtil {
 	* @return the status that was removed
 	*/
 	public static Status removeByUserId(long userId)
-		throws com.liferay.chat.NoSuchStatusException {
+		throws com.liferay.chat.exception.NoSuchStatusException {
 		return getPersistence().removeByUserId(userId);
 	}
 
@@ -239,7 +239,7 @@ public class StatusUtil {
 	*/
 	public static Status findByModifiedDate_First(long modifiedDate,
 		OrderByComparator<Status> orderByComparator)
-		throws com.liferay.chat.NoSuchStatusException {
+		throws com.liferay.chat.exception.NoSuchStatusException {
 		return getPersistence()
 				   .findByModifiedDate_First(modifiedDate, orderByComparator);
 	}
@@ -267,7 +267,7 @@ public class StatusUtil {
 	*/
 	public static Status findByModifiedDate_Last(long modifiedDate,
 		OrderByComparator<Status> orderByComparator)
-		throws com.liferay.chat.NoSuchStatusException {
+		throws com.liferay.chat.exception.NoSuchStatusException {
 		return getPersistence()
 				   .findByModifiedDate_Last(modifiedDate, orderByComparator);
 	}
@@ -296,7 +296,7 @@ public class StatusUtil {
 	*/
 	public static Status[] findByModifiedDate_PrevAndNext(long statusId,
 		long modifiedDate, OrderByComparator<Status> orderByComparator)
-		throws com.liferay.chat.NoSuchStatusException {
+		throws com.liferay.chat.exception.NoSuchStatusException {
 		return getPersistence()
 				   .findByModifiedDate_PrevAndNext(statusId, modifiedDate,
 			orderByComparator);
@@ -397,7 +397,7 @@ public class StatusUtil {
 	*/
 	public static Status findByOnline_First(boolean online,
 		OrderByComparator<Status> orderByComparator)
-		throws com.liferay.chat.NoSuchStatusException {
+		throws com.liferay.chat.exception.NoSuchStatusException {
 		return getPersistence().findByOnline_First(online, orderByComparator);
 	}
 
@@ -423,7 +423,7 @@ public class StatusUtil {
 	*/
 	public static Status findByOnline_Last(boolean online,
 		OrderByComparator<Status> orderByComparator)
-		throws com.liferay.chat.NoSuchStatusException {
+		throws com.liferay.chat.exception.NoSuchStatusException {
 		return getPersistence().findByOnline_Last(online, orderByComparator);
 	}
 
@@ -450,7 +450,7 @@ public class StatusUtil {
 	*/
 	public static Status[] findByOnline_PrevAndNext(long statusId,
 		boolean online, OrderByComparator<Status> orderByComparator)
-		throws com.liferay.chat.NoSuchStatusException {
+		throws com.liferay.chat.exception.NoSuchStatusException {
 		return getPersistence()
 				   .findByOnline_PrevAndNext(statusId, online, orderByComparator);
 	}
@@ -558,7 +558,7 @@ public class StatusUtil {
 	*/
 	public static Status findByM_O_First(long modifiedDate, boolean online,
 		OrderByComparator<Status> orderByComparator)
-		throws com.liferay.chat.NoSuchStatusException {
+		throws com.liferay.chat.exception.NoSuchStatusException {
 		return getPersistence()
 				   .findByM_O_First(modifiedDate, online, orderByComparator);
 	}
@@ -588,7 +588,7 @@ public class StatusUtil {
 	*/
 	public static Status findByM_O_Last(long modifiedDate, boolean online,
 		OrderByComparator<Status> orderByComparator)
-		throws com.liferay.chat.NoSuchStatusException {
+		throws com.liferay.chat.exception.NoSuchStatusException {
 		return getPersistence()
 				   .findByM_O_Last(modifiedDate, online, orderByComparator);
 	}
@@ -620,7 +620,7 @@ public class StatusUtil {
 	public static Status[] findByM_O_PrevAndNext(long statusId,
 		long modifiedDate, boolean online,
 		OrderByComparator<Status> orderByComparator)
-		throws com.liferay.chat.NoSuchStatusException {
+		throws com.liferay.chat.exception.NoSuchStatusException {
 		return getPersistence()
 				   .findByM_O_PrevAndNext(statusId, modifiedDate, online,
 			orderByComparator);
@@ -683,7 +683,7 @@ public class StatusUtil {
 	* @throws NoSuchStatusException if a status with the primary key could not be found
 	*/
 	public static Status remove(long statusId)
-		throws com.liferay.chat.NoSuchStatusException {
+		throws com.liferay.chat.exception.NoSuchStatusException {
 		return getPersistence().remove(statusId);
 	}
 
@@ -699,7 +699,7 @@ public class StatusUtil {
 	* @throws NoSuchStatusException if a status with the primary key could not be found
 	*/
 	public static Status findByPrimaryKey(long statusId)
-		throws com.liferay.chat.NoSuchStatusException {
+		throws com.liferay.chat.exception.NoSuchStatusException {
 		return getPersistence().findByPrimaryKey(statusId);
 	}
 
@@ -807,13 +807,6 @@ public class StatusUtil {
 		}
 
 		return _persistence;
-	}
-
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(StatusPersistence persistence) {
 	}
 
 	private static StatusPersistence _persistence;

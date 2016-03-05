@@ -20,10 +20,10 @@ import com.liferay.knowledgebase.service.KBArticleServiceUtil;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
-import com.liferay.portal.security.auth.HttpPrincipal;
-import com.liferay.portal.service.http.TunnelUtil;
 
 /**
  * Provides the HTTP utility for the
@@ -62,7 +62,7 @@ public class KBArticleServiceHttp {
 		java.lang.String content, java.lang.String description,
 		java.lang.String sourceURL, java.lang.String[] sections,
 		java.lang.String[] selectedFileNames,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(KBArticleServiceUtil.class,
@@ -99,7 +99,7 @@ public class KBArticleServiceHttp {
 	public static int addKBArticlesMarkdown(HttpPrincipal httpPrincipal,
 		long groupId, long parentKBFolderId, java.lang.String fileName,
 		boolean prioritizeByNumericalPrefix, java.io.InputStream inputStream,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(KBArticleServiceUtil.class,
@@ -344,7 +344,7 @@ public class KBArticleServiceHttp {
 	public static java.lang.String getGroupKBArticlesRSS(
 		HttpPrincipal httpPrincipal, int status, int rssDelta,
 		java.lang.String rssDisplayStyle, java.lang.String rssFormat,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(KBArticleServiceUtil.class,
@@ -472,7 +472,7 @@ public class KBArticleServiceHttp {
 		HttpPrincipal httpPrincipal, long resourcePrimKey, int status,
 		int rssDelta, java.lang.String rssDisplayStyle,
 		java.lang.String rssFormat,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(KBArticleServiceUtil.class,
@@ -955,7 +955,7 @@ public class KBArticleServiceHttp {
 
 	public static com.liferay.knowledgebase.model.KBArticle revertKBArticle(
 		HttpPrincipal httpPrincipal, long resourcePrimKey, int version,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(KBArticleServiceUtil.class,
@@ -1107,7 +1107,7 @@ public class KBArticleServiceHttp {
 		java.lang.String description, java.lang.String sourceURL,
 		java.lang.String[] sections, java.lang.String[] selectedFileNames,
 		long[] removeFileEntryIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(KBArticleServiceUtil.class,
@@ -1177,12 +1177,12 @@ public class KBArticleServiceHttp {
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String[].class,
 			java.lang.String[].class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addKBArticlesMarkdownParameterTypes1 = new Class[] {
 			long.class, long.class, java.lang.String.class, boolean.class,
 			java.io.InputStream.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addTempAttachmentParameterTypes2 = new Class[] {
 			long.class, long.class, java.lang.String.class,
@@ -1211,7 +1211,7 @@ public class KBArticleServiceHttp {
 		};
 	private static final Class<?>[] _getGroupKBArticlesRSSParameterTypes9 = new Class[] {
 			int.class, int.class, java.lang.String.class, java.lang.String.class,
-			com.liferay.portal.theme.ThemeDisplay.class
+			com.liferay.portal.kernel.theme.ThemeDisplay.class
 		};
 	private static final Class<?>[] _getKBArticleParameterTypes10 = new Class[] {
 			long.class, int.class
@@ -1228,7 +1228,8 @@ public class KBArticleServiceHttp {
 		};
 	private static final Class<?>[] _getKBArticleRSSParameterTypes13 = new Class[] {
 			long.class, int.class, int.class, java.lang.String.class,
-			java.lang.String.class, com.liferay.portal.theme.ThemeDisplay.class
+			java.lang.String.class,
+			com.liferay.portal.kernel.theme.ThemeDisplay.class
 		};
 	private static final Class<?>[] _getKBArticlesParameterTypes14 = new Class[] {
 			long.class, long.class, int.class, int.class, int.class,
@@ -1286,7 +1287,7 @@ public class KBArticleServiceHttp {
 		};
 	private static final Class<?>[] _revertKBArticleParameterTypes29 = new Class[] {
 			long.class, int.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _subscribeGroupKBArticlesParameterTypes30 = new Class[] {
 			long.class, java.lang.String.class
@@ -1304,7 +1305,7 @@ public class KBArticleServiceHttp {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String[].class, java.lang.String[].class, long[].class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateKBArticlesPrioritiesParameterTypes35 = new Class[] {
 			long.class, java.util.Map.class

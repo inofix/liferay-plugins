@@ -106,7 +106,7 @@ portletURL.setParameter("delta", String.valueOf(delta));
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portal.model.Group"
+			className="com.liferay.portal.kernel.model.Group"
 			escapedModel="<%= true %>"
 			keyProperty="groupId"
 			modelVar="group"
@@ -170,7 +170,7 @@ portletURL.setParameter("delta", String.valueOf(delta));
 </aui:form>
 
 <aui:script use="aui-base,liferay-util-list-fields">
-	A.one('#<portlet:namespace /><%= searchContainerReference.getId() %>SearchContainer').delegate(
+	A.one('#<portlet:namespace /><%= searchContainerReference.getId(request) %>SearchContainer').delegate(
 		'click',
 		function() {
 			var hide = (Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>').length == 0);

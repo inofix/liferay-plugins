@@ -16,7 +16,7 @@ package com.liferay.chat.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link StatusLocalService}.
@@ -59,8 +59,8 @@ public class StatusLocalServiceWrapper implements StatusLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _statusLocalService.deletePersistedModel(persistedModel);
 	}
@@ -198,6 +198,11 @@ public class StatusLocalServiceWrapper implements StatusLocalService,
 			groupNames, start, end);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _statusLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -209,7 +214,7 @@ public class StatusLocalServiceWrapper implements StatusLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _statusLocalService.getPersistedModel(primaryKeyObj);
@@ -305,23 +310,6 @@ public class StatusLocalServiceWrapper implements StatusLocalService,
 		java.lang.String activePanelIds, java.lang.String message, int playSound) {
 		return _statusLocalService.updateStatus(userId, modifiedDate, online,
 			awake, activePanelIds, message, playSound);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public StatusLocalService getWrappedStatusLocalService() {
-		return _statusLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedStatusLocalService(
-		StatusLocalService statusLocalService) {
-		_statusLocalService = statusLocalService;
 	}
 
 	@Override

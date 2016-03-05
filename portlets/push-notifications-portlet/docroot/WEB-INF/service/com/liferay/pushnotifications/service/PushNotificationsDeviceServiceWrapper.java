@@ -16,7 +16,7 @@ package com.liferay.pushnotifications.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link PushNotificationsDeviceService}.
@@ -79,23 +79,6 @@ public class PushNotificationsDeviceServiceWrapper
 	public void sendPushNotification(long[] toUserIds, java.lang.String payload)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_pushNotificationsDeviceService.sendPushNotification(toUserIds, payload);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public PushNotificationsDeviceService getWrappedPushNotificationsDeviceService() {
-		return _pushNotificationsDeviceService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedPushNotificationsDeviceService(
-		PushNotificationsDeviceService pushNotificationsDeviceService) {
-		_pushNotificationsDeviceService = pushNotificationsDeviceService;
 	}
 
 	@Override

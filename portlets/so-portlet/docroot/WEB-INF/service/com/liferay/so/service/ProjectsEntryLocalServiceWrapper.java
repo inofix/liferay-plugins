@@ -16,7 +16,7 @@ package com.liferay.so.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link ProjectsEntryLocalService}.
@@ -74,8 +74,8 @@ public class ProjectsEntryLocalServiceWrapper
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _projectsEntryLocalService.deletePersistedModel(persistedModel);
 	}
@@ -202,6 +202,11 @@ public class ProjectsEntryLocalServiceWrapper
 		return _projectsEntryLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _projectsEntryLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -213,7 +218,7 @@ public class ProjectsEntryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _projectsEntryLocalService.getPersistedModel(primaryKeyObj);
@@ -301,23 +306,6 @@ public class ProjectsEntryLocalServiceWrapper
 		return _projectsEntryLocalService.updateProjectsEntry(projectsEntryId,
 			title, description, startDateMonth, startDateDay, startDateYear,
 			endDateMonth, endDateDay, endDateYear, current, data);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public ProjectsEntryLocalService getWrappedProjectsEntryLocalService() {
-		return _projectsEntryLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedProjectsEntryLocalService(
-		ProjectsEntryLocalService projectsEntryLocalService) {
-		_projectsEntryLocalService = projectsEntryLocalService;
 	}
 
 	@Override

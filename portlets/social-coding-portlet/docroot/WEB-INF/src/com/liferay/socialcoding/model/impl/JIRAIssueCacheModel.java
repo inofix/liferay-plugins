@@ -16,10 +16,10 @@ package com.liferay.socialcoding.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.CacheModel;
 
 import com.liferay.socialcoding.model.JIRAIssue;
 
@@ -170,7 +170,9 @@ public class JIRAIssueCacheModel implements CacheModel<JIRAIssue>,
 		jiraIssueId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+
 		projectId = objectInput.readLong();
+
 		issueNumber = objectInput.readLong();
 		summary = objectInput.readUTF();
 		description = objectInput.readUTF();
@@ -186,7 +188,9 @@ public class JIRAIssueCacheModel implements CacheModel<JIRAIssue>,
 		objectOutput.writeLong(jiraIssueId);
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
 		objectOutput.writeLong(projectId);
+
 		objectOutput.writeLong(issueNumber);
 
 		if (summary == null) {

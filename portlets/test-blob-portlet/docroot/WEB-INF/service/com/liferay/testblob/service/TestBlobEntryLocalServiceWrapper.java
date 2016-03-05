@@ -16,7 +16,7 @@ package com.liferay.testblob.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link TestBlobEntryLocalService}.
@@ -62,8 +62,8 @@ public class TestBlobEntryLocalServiceWrapper
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _testBlobEntryLocalService.deletePersistedModel(persistedModel);
 	}
@@ -196,6 +196,11 @@ public class TestBlobEntryLocalServiceWrapper
 		return _testBlobEntryLocalService.getBlobFieldBlobModel(primaryKey);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _testBlobEntryLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -207,7 +212,7 @@ public class TestBlobEntryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _testBlobEntryLocalService.getPersistedModel(primaryKeyObj);
@@ -272,23 +277,6 @@ public class TestBlobEntryLocalServiceWrapper
 	public com.liferay.testblob.model.TestBlobEntry updateTestBlobEntry(
 		com.liferay.testblob.model.TestBlobEntry testBlobEntry) {
 		return _testBlobEntryLocalService.updateTestBlobEntry(testBlobEntry);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public TestBlobEntryLocalService getWrappedTestBlobEntryLocalService() {
-		return _testBlobEntryLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedTestBlobEntryLocalService(
-		TestBlobEntryLocalService testBlobEntryLocalService) {
-		_testBlobEntryLocalService = testBlobEntryLocalService;
 	}
 
 	@Override

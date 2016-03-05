@@ -16,7 +16,7 @@ package com.liferay.so.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link SocialOfficeService}.
@@ -59,23 +59,6 @@ public class SocialOfficeServiceWrapper implements SocialOfficeService,
 	public boolean isSocialOfficeGroup(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _socialOfficeService.isSocialOfficeGroup(groupId);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public SocialOfficeService getWrappedSocialOfficeService() {
-		return _socialOfficeService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedSocialOfficeService(
-		SocialOfficeService socialOfficeService) {
-		_socialOfficeService = socialOfficeService;
 	}
 
 	@Override

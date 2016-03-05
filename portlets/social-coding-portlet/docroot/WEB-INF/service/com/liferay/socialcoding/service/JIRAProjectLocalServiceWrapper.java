@@ -16,7 +16,7 @@ package com.liferay.socialcoding.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link JIRAProjectLocalService}.
@@ -87,8 +87,8 @@ public class JIRAProjectLocalServiceWrapper implements JIRAProjectLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _jiraProjectLocalService.deletePersistedModel(persistedModel);
 	}
@@ -189,6 +189,11 @@ public class JIRAProjectLocalServiceWrapper implements JIRAProjectLocalService,
 		return _jiraProjectLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _jiraProjectLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the j i r a project with the primary key.
 	*
@@ -241,7 +246,7 @@ public class JIRAProjectLocalServiceWrapper implements JIRAProjectLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _jiraProjectLocalService.getPersistedModel(primaryKeyObj);
@@ -265,23 +270,6 @@ public class JIRAProjectLocalServiceWrapper implements JIRAProjectLocalService,
 	public com.liferay.socialcoding.model.JIRAProject updateJIRAProject(
 		com.liferay.socialcoding.model.JIRAProject jiraProject) {
 		return _jiraProjectLocalService.updateJIRAProject(jiraProject);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public JIRAProjectLocalService getWrappedJIRAProjectLocalService() {
-		return _jiraProjectLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedJIRAProjectLocalService(
-		JIRAProjectLocalService jiraProjectLocalService) {
-		_jiraProjectLocalService = jiraProjectLocalService;
 	}
 
 	@Override

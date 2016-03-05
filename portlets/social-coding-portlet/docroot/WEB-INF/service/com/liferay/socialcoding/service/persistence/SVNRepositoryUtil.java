@@ -18,9 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.socialcoding.model.SVNRepository;
 
@@ -47,28 +47,28 @@ public class SVNRepositoryUtil {
 	 */
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#clearCache()
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
 		getPersistence().clearCache();
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#clearCache(com.liferay.portal.model.BaseModel)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache(com.liferay.portal.kernel.model.BaseModel)
 	 */
 	public static void clearCache(SVNRepository svnRepository) {
 		getPersistence().clearCache(svnRepository);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
 	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<SVNRepository> findWithDynamicQuery(
 		DynamicQuery dynamicQuery) {
@@ -76,7 +76,7 @@ public class SVNRepositoryUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<SVNRepository> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end) {
@@ -84,7 +84,7 @@ public class SVNRepositoryUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
 	 */
 	public static List<SVNRepository> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
@@ -95,14 +95,14 @@ public class SVNRepositoryUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel)
 	 */
 	public static SVNRepository update(SVNRepository svnRepository) {
 		return getPersistence().update(svnRepository);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel, ServiceContext)
 	 */
 	public static SVNRepository update(SVNRepository svnRepository,
 		ServiceContext serviceContext) {
@@ -117,7 +117,7 @@ public class SVNRepositoryUtil {
 	* @throws NoSuchSVNRepositoryException if a matching s v n repository could not be found
 	*/
 	public static SVNRepository findByUrl(java.lang.String url)
-		throws com.liferay.socialcoding.NoSuchSVNRepositoryException {
+		throws com.liferay.socialcoding.exception.NoSuchSVNRepositoryException {
 		return getPersistence().findByUrl(url);
 	}
 
@@ -150,7 +150,7 @@ public class SVNRepositoryUtil {
 	* @return the s v n repository that was removed
 	*/
 	public static SVNRepository removeByUrl(java.lang.String url)
-		throws com.liferay.socialcoding.NoSuchSVNRepositoryException {
+		throws com.liferay.socialcoding.exception.NoSuchSVNRepositoryException {
 		return getPersistence().removeByUrl(url);
 	}
 
@@ -200,7 +200,7 @@ public class SVNRepositoryUtil {
 	* @throws NoSuchSVNRepositoryException if a s v n repository with the primary key could not be found
 	*/
 	public static SVNRepository remove(long svnRepositoryId)
-		throws com.liferay.socialcoding.NoSuchSVNRepositoryException {
+		throws com.liferay.socialcoding.exception.NoSuchSVNRepositoryException {
 		return getPersistence().remove(svnRepositoryId);
 	}
 
@@ -216,7 +216,7 @@ public class SVNRepositoryUtil {
 	* @throws NoSuchSVNRepositoryException if a s v n repository with the primary key could not be found
 	*/
 	public static SVNRepository findByPrimaryKey(long svnRepositoryId)
-		throws com.liferay.socialcoding.NoSuchSVNRepositoryException {
+		throws com.liferay.socialcoding.exception.NoSuchSVNRepositoryException {
 		return getPersistence().findByPrimaryKey(svnRepositoryId);
 	}
 
@@ -322,13 +322,6 @@ public class SVNRepositoryUtil {
 		}
 
 		return _persistence;
-	}
-
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(SVNRepositoryPersistence persistence) {
 	}
 
 	private static SVNRepositoryPersistence _persistence;

@@ -16,10 +16,10 @@ package com.liferay.socialcoding.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.CacheModel;
 
 import com.liferay.socialcoding.model.SVNRevision;
 
@@ -125,7 +125,9 @@ public class SVNRevisionCacheModel implements CacheModel<SVNRevision>,
 		svnRevisionId = objectInput.readLong();
 		svnUserId = objectInput.readUTF();
 		createDate = objectInput.readLong();
+
 		svnRepositoryId = objectInput.readLong();
+
 		revisionNumber = objectInput.readLong();
 		comments = objectInput.readUTF();
 	}
@@ -143,7 +145,9 @@ public class SVNRevisionCacheModel implements CacheModel<SVNRevision>,
 		}
 
 		objectOutput.writeLong(createDate);
+
 		objectOutput.writeLong(svnRepositoryId);
+
 		objectOutput.writeLong(revisionNumber);
 
 		if (comments == null) {

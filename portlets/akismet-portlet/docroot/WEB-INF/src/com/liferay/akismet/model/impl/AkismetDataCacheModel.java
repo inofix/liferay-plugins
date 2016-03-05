@@ -18,10 +18,10 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.akismet.model.AkismetData;
 
+import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.CacheModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -160,7 +160,9 @@ public class AkismetDataCacheModel implements CacheModel<AkismetData>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		akismetDataId = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+
 		classNameId = objectInput.readLong();
+
 		classPK = objectInput.readLong();
 		type = objectInput.readUTF();
 		permalink = objectInput.readUTF();
@@ -175,7 +177,9 @@ public class AkismetDataCacheModel implements CacheModel<AkismetData>,
 		throws IOException {
 		objectOutput.writeLong(akismetDataId);
 		objectOutput.writeLong(modifiedDate);
+
 		objectOutput.writeLong(classNameId);
+
 		objectOutput.writeLong(classPK);
 
 		if (type == null) {

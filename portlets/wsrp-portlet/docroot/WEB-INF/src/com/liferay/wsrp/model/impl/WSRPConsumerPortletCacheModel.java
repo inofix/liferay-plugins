@@ -16,10 +16,10 @@ package com.liferay.wsrp.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.CacheModel;
 
 import com.liferay.wsrp.model.WSRPConsumerPortlet;
 
@@ -150,10 +150,13 @@ public class WSRPConsumerPortletCacheModel implements CacheModel<WSRPConsumerPor
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
+
 		wsrpConsumerPortletId = objectInput.readLong();
+
 		companyId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+
 		wsrpConsumerId = objectInput.readLong();
 		name = objectInput.readUTF();
 		portletHandle = objectInput.readUTF();
@@ -171,9 +174,11 @@ public class WSRPConsumerPortletCacheModel implements CacheModel<WSRPConsumerPor
 		}
 
 		objectOutput.writeLong(wsrpConsumerPortletId);
+
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
 		objectOutput.writeLong(wsrpConsumerId);
 
 		if (name == null) {

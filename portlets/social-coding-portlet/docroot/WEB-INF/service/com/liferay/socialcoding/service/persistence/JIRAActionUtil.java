@@ -18,9 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.socialcoding.model.JIRAAction;
 
@@ -47,28 +47,28 @@ public class JIRAActionUtil {
 	 */
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#clearCache()
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
 		getPersistence().clearCache();
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#clearCache(com.liferay.portal.model.BaseModel)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache(com.liferay.portal.kernel.model.BaseModel)
 	 */
 	public static void clearCache(JIRAAction jiraAction) {
 		getPersistence().clearCache(jiraAction);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
 	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<JIRAAction> findWithDynamicQuery(
 		DynamicQuery dynamicQuery) {
@@ -76,7 +76,7 @@ public class JIRAActionUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<JIRAAction> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end) {
@@ -84,7 +84,7 @@ public class JIRAActionUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
 	 */
 	public static List<JIRAAction> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
@@ -95,14 +95,14 @@ public class JIRAActionUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel)
 	 */
 	public static JIRAAction update(JIRAAction jiraAction) {
 		return getPersistence().update(jiraAction);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel, ServiceContext)
 	 */
 	public static JIRAAction update(JIRAAction jiraAction,
 		ServiceContext serviceContext) {
@@ -190,7 +190,7 @@ public class JIRAActionUtil {
 	public static JIRAAction findByJiraUserId_First(
 		java.lang.String jiraUserId,
 		OrderByComparator<JIRAAction> orderByComparator)
-		throws com.liferay.socialcoding.NoSuchJIRAActionException {
+		throws com.liferay.socialcoding.exception.NoSuchJIRAActionException {
 		return getPersistence()
 				   .findByJiraUserId_First(jiraUserId, orderByComparator);
 	}
@@ -220,7 +220,7 @@ public class JIRAActionUtil {
 	public static JIRAAction findByJiraUserId_Last(
 		java.lang.String jiraUserId,
 		OrderByComparator<JIRAAction> orderByComparator)
-		throws com.liferay.socialcoding.NoSuchJIRAActionException {
+		throws com.liferay.socialcoding.exception.NoSuchJIRAActionException {
 		return getPersistence()
 				   .findByJiraUserId_Last(jiraUserId, orderByComparator);
 	}
@@ -251,7 +251,7 @@ public class JIRAActionUtil {
 	public static JIRAAction[] findByJiraUserId_PrevAndNext(long jiraActionId,
 		java.lang.String jiraUserId,
 		OrderByComparator<JIRAAction> orderByComparator)
-		throws com.liferay.socialcoding.NoSuchJIRAActionException {
+		throws com.liferay.socialcoding.exception.NoSuchJIRAActionException {
 		return getPersistence()
 				   .findByJiraUserId_PrevAndNext(jiraActionId, jiraUserId,
 			orderByComparator);
@@ -354,7 +354,7 @@ public class JIRAActionUtil {
 	*/
 	public static JIRAAction findByJiraIssueId_First(long jiraIssueId,
 		OrderByComparator<JIRAAction> orderByComparator)
-		throws com.liferay.socialcoding.NoSuchJIRAActionException {
+		throws com.liferay.socialcoding.exception.NoSuchJIRAActionException {
 		return getPersistence()
 				   .findByJiraIssueId_First(jiraIssueId, orderByComparator);
 	}
@@ -382,7 +382,7 @@ public class JIRAActionUtil {
 	*/
 	public static JIRAAction findByJiraIssueId_Last(long jiraIssueId,
 		OrderByComparator<JIRAAction> orderByComparator)
-		throws com.liferay.socialcoding.NoSuchJIRAActionException {
+		throws com.liferay.socialcoding.exception.NoSuchJIRAActionException {
 		return getPersistence()
 				   .findByJiraIssueId_Last(jiraIssueId, orderByComparator);
 	}
@@ -412,7 +412,7 @@ public class JIRAActionUtil {
 	public static JIRAAction[] findByJiraIssueId_PrevAndNext(
 		long jiraActionId, long jiraIssueId,
 		OrderByComparator<JIRAAction> orderByComparator)
-		throws com.liferay.socialcoding.NoSuchJIRAActionException {
+		throws com.liferay.socialcoding.exception.NoSuchJIRAActionException {
 		return getPersistence()
 				   .findByJiraIssueId_PrevAndNext(jiraActionId, jiraIssueId,
 			orderByComparator);
@@ -514,7 +514,7 @@ public class JIRAActionUtil {
 	*/
 	public static JIRAAction findByType_First(java.lang.String type,
 		OrderByComparator<JIRAAction> orderByComparator)
-		throws com.liferay.socialcoding.NoSuchJIRAActionException {
+		throws com.liferay.socialcoding.exception.NoSuchJIRAActionException {
 		return getPersistence().findByType_First(type, orderByComparator);
 	}
 
@@ -540,7 +540,7 @@ public class JIRAActionUtil {
 	*/
 	public static JIRAAction findByType_Last(java.lang.String type,
 		OrderByComparator<JIRAAction> orderByComparator)
-		throws com.liferay.socialcoding.NoSuchJIRAActionException {
+		throws com.liferay.socialcoding.exception.NoSuchJIRAActionException {
 		return getPersistence().findByType_Last(type, orderByComparator);
 	}
 
@@ -567,7 +567,7 @@ public class JIRAActionUtil {
 	*/
 	public static JIRAAction[] findByType_PrevAndNext(long jiraActionId,
 		java.lang.String type, OrderByComparator<JIRAAction> orderByComparator)
-		throws com.liferay.socialcoding.NoSuchJIRAActionException {
+		throws com.liferay.socialcoding.exception.NoSuchJIRAActionException {
 		return getPersistence()
 				   .findByType_PrevAndNext(jiraActionId, type, orderByComparator);
 	}
@@ -627,7 +627,7 @@ public class JIRAActionUtil {
 	* @throws NoSuchJIRAActionException if a j i r a action with the primary key could not be found
 	*/
 	public static JIRAAction remove(long jiraActionId)
-		throws com.liferay.socialcoding.NoSuchJIRAActionException {
+		throws com.liferay.socialcoding.exception.NoSuchJIRAActionException {
 		return getPersistence().remove(jiraActionId);
 	}
 
@@ -643,7 +643,7 @@ public class JIRAActionUtil {
 	* @throws NoSuchJIRAActionException if a j i r a action with the primary key could not be found
 	*/
 	public static JIRAAction findByPrimaryKey(long jiraActionId)
-		throws com.liferay.socialcoding.NoSuchJIRAActionException {
+		throws com.liferay.socialcoding.exception.NoSuchJIRAActionException {
 		return getPersistence().findByPrimaryKey(jiraActionId);
 	}
 
@@ -753,13 +753,6 @@ public class JIRAActionUtil {
 		}
 
 		return _persistence;
-	}
-
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(JIRAActionPersistence persistence) {
 	}
 
 	private static JIRAActionPersistence _persistence;

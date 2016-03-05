@@ -16,7 +16,7 @@ package com.liferay.contacts.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link EntryLocalService}.
@@ -93,8 +93,8 @@ public class EntryLocalServiceWrapper implements EntryLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _entryLocalService.deletePersistedModel(persistedModel);
 	}
@@ -244,6 +244,11 @@ public class EntryLocalServiceWrapper implements EntryLocalService,
 		return _entryLocalService.getEntry(entryId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _entryLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -255,7 +260,7 @@ public class EntryLocalServiceWrapper implements EntryLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _entryLocalService.getPersistedModel(primaryKeyObj);
@@ -280,7 +285,7 @@ public class EntryLocalServiceWrapper implements EntryLocalService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.model.BaseModel<?>> searchUsersAndContacts(
+	public java.util.List<com.liferay.portal.kernel.model.BaseModel<?>> searchUsersAndContacts(
 		long companyId, long userId, java.lang.String keywords, int start,
 		int end) {
 		return _entryLocalService.searchUsersAndContacts(companyId, userId,
@@ -313,22 +318,6 @@ public class EntryLocalServiceWrapper implements EntryLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _entryLocalService.updateEntry(entryId, fullName, emailAddress,
 			comments);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public EntryLocalService getWrappedEntryLocalService() {
-		return _entryLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedEntryLocalService(EntryLocalService entryLocalService) {
-		_entryLocalService = entryLocalService;
 	}
 
 	@Override

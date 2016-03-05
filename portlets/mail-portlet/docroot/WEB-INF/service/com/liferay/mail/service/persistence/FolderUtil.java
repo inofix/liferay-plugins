@@ -20,9 +20,9 @@ import com.liferay.mail.model.Folder;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.ServiceContext;
 
 import java.util.List;
 
@@ -47,35 +47,35 @@ public class FolderUtil {
 	 */
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#clearCache()
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
 		getPersistence().clearCache();
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#clearCache(com.liferay.portal.model.BaseModel)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache(com.liferay.portal.kernel.model.BaseModel)
 	 */
 	public static void clearCache(Folder folder) {
 		getPersistence().clearCache(folder);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
 	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<Folder> findWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<Folder> findWithDynamicQuery(DynamicQuery dynamicQuery,
 		int start, int end) {
@@ -83,7 +83,7 @@ public class FolderUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
 	 */
 	public static List<Folder> findWithDynamicQuery(DynamicQuery dynamicQuery,
 		int start, int end, OrderByComparator<Folder> orderByComparator) {
@@ -93,14 +93,14 @@ public class FolderUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel)
 	 */
 	public static Folder update(Folder folder) {
 		return getPersistence().update(folder);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel, ServiceContext)
 	 */
 	public static Folder update(Folder folder, ServiceContext serviceContext) {
 		return getPersistence().update(folder, serviceContext);
@@ -184,7 +184,7 @@ public class FolderUtil {
 	*/
 	public static Folder findByAccountId_First(long accountId,
 		OrderByComparator<Folder> orderByComparator)
-		throws com.liferay.mail.NoSuchFolderException {
+		throws com.liferay.mail.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByAccountId_First(accountId, orderByComparator);
 	}
@@ -212,7 +212,7 @@ public class FolderUtil {
 	*/
 	public static Folder findByAccountId_Last(long accountId,
 		OrderByComparator<Folder> orderByComparator)
-		throws com.liferay.mail.NoSuchFolderException {
+		throws com.liferay.mail.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByAccountId_Last(accountId, orderByComparator);
 	}
@@ -241,7 +241,7 @@ public class FolderUtil {
 	*/
 	public static Folder[] findByAccountId_PrevAndNext(long folderId,
 		long accountId, OrderByComparator<Folder> orderByComparator)
-		throws com.liferay.mail.NoSuchFolderException {
+		throws com.liferay.mail.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByAccountId_PrevAndNext(folderId, accountId,
 			orderByComparator);
@@ -275,7 +275,7 @@ public class FolderUtil {
 	* @throws NoSuchFolderException if a matching folder could not be found
 	*/
 	public static Folder findByA_F(long accountId, java.lang.String fullName)
-		throws com.liferay.mail.NoSuchFolderException {
+		throws com.liferay.mail.exception.NoSuchFolderException {
 		return getPersistence().findByA_F(accountId, fullName);
 	}
 
@@ -312,7 +312,7 @@ public class FolderUtil {
 	* @return the folder that was removed
 	*/
 	public static Folder removeByA_F(long accountId, java.lang.String fullName)
-		throws com.liferay.mail.NoSuchFolderException {
+		throws com.liferay.mail.exception.NoSuchFolderException {
 		return getPersistence().removeByA_F(accountId, fullName);
 	}
 
@@ -363,7 +363,7 @@ public class FolderUtil {
 	* @throws NoSuchFolderException if a folder with the primary key could not be found
 	*/
 	public static Folder remove(long folderId)
-		throws com.liferay.mail.NoSuchFolderException {
+		throws com.liferay.mail.exception.NoSuchFolderException {
 		return getPersistence().remove(folderId);
 	}
 
@@ -379,7 +379,7 @@ public class FolderUtil {
 	* @throws NoSuchFolderException if a folder with the primary key could not be found
 	*/
 	public static Folder findByPrimaryKey(long folderId)
-		throws com.liferay.mail.NoSuchFolderException {
+		throws com.liferay.mail.exception.NoSuchFolderException {
 		return getPersistence().findByPrimaryKey(folderId);
 	}
 
@@ -483,13 +483,6 @@ public class FolderUtil {
 		}
 
 		return _persistence;
-	}
-
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(FolderPersistence persistence) {
 	}
 
 	private static FolderPersistence _persistence;

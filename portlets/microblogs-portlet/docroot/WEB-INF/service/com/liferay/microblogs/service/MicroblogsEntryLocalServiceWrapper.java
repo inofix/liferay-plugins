@@ -16,7 +16,7 @@ package com.liferay.microblogs.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link MicroblogsEntryLocalService}.
@@ -50,7 +50,7 @@ public class MicroblogsEntryLocalServiceWrapper
 	public com.liferay.microblogs.model.MicroblogsEntry addMicroblogsEntry(
 		long userId, java.lang.String content, int type,
 		long parentMicroblogsEntryId, int socialRelationType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _microblogsEntryLocalService.addMicroblogsEntry(userId, content,
 			type, parentMicroblogsEntryId, socialRelationType, serviceContext);
@@ -61,7 +61,7 @@ public class MicroblogsEntryLocalServiceWrapper
 		long userId, long creatorClassNameId, long creatorClassPK,
 		java.lang.String content, int type, long parentMicroblogsEntryId,
 		int socialRelationType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _microblogsEntryLocalService.addMicroblogsEntry(userId,
 			creatorClassNameId, creatorClassPK, content, type,
@@ -120,8 +120,8 @@ public class MicroblogsEntryLocalServiceWrapper
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _microblogsEntryLocalService.deletePersistedModel(persistedModel);
 	}
@@ -239,6 +239,11 @@ public class MicroblogsEntryLocalServiceWrapper
 	@Override
 	public int getCompanyMicroblogsEntriesCount(long companyId) {
 		return _microblogsEntryLocalService.getCompanyMicroblogsEntriesCount(companyId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _microblogsEntryLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	@Override
@@ -382,7 +387,7 @@ public class MicroblogsEntryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _microblogsEntryLocalService.getPersistedModel(primaryKeyObj);
@@ -446,27 +451,10 @@ public class MicroblogsEntryLocalServiceWrapper
 	public com.liferay.microblogs.model.MicroblogsEntry updateMicroblogsEntry(
 		long microblogsEntryId, java.lang.String content,
 		int socialRelationType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _microblogsEntryLocalService.updateMicroblogsEntry(microblogsEntryId,
 			content, socialRelationType, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public MicroblogsEntryLocalService getWrappedMicroblogsEntryLocalService() {
-		return _microblogsEntryLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedMicroblogsEntryLocalService(
-		MicroblogsEntryLocalService microblogsEntryLocalService) {
-		_microblogsEntryLocalService = microblogsEntryLocalService;
 	}
 
 	@Override

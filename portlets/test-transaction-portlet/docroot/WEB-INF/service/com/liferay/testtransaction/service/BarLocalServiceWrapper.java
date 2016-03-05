@@ -16,7 +16,7 @@ package com.liferay.testtransaction.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link BarLocalService}.
@@ -111,8 +111,8 @@ public class BarLocalServiceWrapper implements BarLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _barLocalService.deletePersistedModel(persistedModel);
 	}
@@ -257,6 +257,11 @@ public class BarLocalServiceWrapper implements BarLocalService,
 		return _barLocalService.getBarsCount();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _barLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -268,7 +273,7 @@ public class BarLocalServiceWrapper implements BarLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _barLocalService.getPersistedModel(primaryKeyObj);
@@ -306,22 +311,6 @@ public class BarLocalServiceWrapper implements BarLocalService,
 	public com.liferay.testtransaction.model.Bar updateBar(
 		com.liferay.testtransaction.model.Bar bar) {
 		return _barLocalService.updateBar(bar);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public BarLocalService getWrappedBarLocalService() {
-		return _barLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedBarLocalService(BarLocalService barLocalService) {
-		_barLocalService = barLocalService;
 	}
 
 	@Override

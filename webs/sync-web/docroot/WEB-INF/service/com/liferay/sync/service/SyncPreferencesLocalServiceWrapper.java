@@ -16,7 +16,7 @@ package com.liferay.sync.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link SyncPreferencesLocalService}.
@@ -36,7 +36,8 @@ public class SyncPreferencesLocalServiceWrapper
 
 	@Override
 	public com.liferay.oauth.model.OAuthApplication enableOAuth(
-		long companyId, com.liferay.portal.service.ServiceContext serviceContext)
+		long companyId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _syncPreferencesLocalService.enableOAuth(companyId,
 			serviceContext);
@@ -65,23 +66,6 @@ public class SyncPreferencesLocalServiceWrapper
 		throws java.lang.Throwable {
 		return _syncPreferencesLocalService.invokeMethod(name, parameterTypes,
 			arguments);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public SyncPreferencesLocalService getWrappedSyncPreferencesLocalService() {
-		return _syncPreferencesLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedSyncPreferencesLocalService(
-		SyncPreferencesLocalService syncPreferencesLocalService) {
-		_syncPreferencesLocalService = syncPreferencesLocalService;
 	}
 
 	@Override

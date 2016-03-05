@@ -16,7 +16,7 @@ package com.liferay.pushnotifications.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link PushNotificationsDeviceLocalService}.
@@ -69,8 +69,8 @@ public class PushNotificationsDeviceLocalServiceWrapper
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _pushNotificationsDeviceLocalService.deletePersistedModel(persistedModel);
 	}
@@ -205,6 +205,11 @@ public class PushNotificationsDeviceLocalServiceWrapper
 		return _pushNotificationsDeviceLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _pushNotificationsDeviceLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -216,7 +221,7 @@ public class PushNotificationsDeviceLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _pushNotificationsDeviceLocalService.getPersistedModel(primaryKeyObj);
@@ -328,23 +333,6 @@ public class PushNotificationsDeviceLocalServiceWrapper
 	public void updateToken(java.lang.String oldToken, java.lang.String newToken)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_pushNotificationsDeviceLocalService.updateToken(oldToken, newToken);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public PushNotificationsDeviceLocalService getWrappedPushNotificationsDeviceLocalService() {
-		return _pushNotificationsDeviceLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedPushNotificationsDeviceLocalService(
-		PushNotificationsDeviceLocalService pushNotificationsDeviceLocalService) {
-		_pushNotificationsDeviceLocalService = pushNotificationsDeviceLocalService;
 	}
 
 	@Override

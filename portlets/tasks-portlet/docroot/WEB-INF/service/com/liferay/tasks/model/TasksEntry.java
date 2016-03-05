@@ -16,8 +16,9 @@ package com.liferay.tasks.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.annotation.ImplementationClassName;
+import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.Accessor;
-import com.liferay.portal.model.PersistedModel;
 
 /**
  * The extended model interface for the TasksEntry service. Represents a row in the &quot;TMS_TasksEntry&quot; database table, with each column mapped to a property of this class.
@@ -28,6 +29,7 @@ import com.liferay.portal.model.PersistedModel;
  * @see com.liferay.tasks.model.impl.TasksEntryModelImpl
  * @generated
  */
+@ImplementationClassName("com.liferay.tasks.model.impl.TasksEntryImpl")
 @ProviderType
 public interface TasksEntry extends TasksEntryModel, PersistedModel {
 	/*

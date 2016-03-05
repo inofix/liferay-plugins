@@ -16,10 +16,15 @@ package com.liferay.wsrp.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelWrapper;
+import com.liferay.expando.kernel.model.ExpandoBridge;
 
-import com.liferay.portlet.exportimport.lar.StagedModelType;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
+import com.liferay.portal.kernel.model.ModelWrapper;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -163,7 +168,7 @@ public class WSRPProducerWrapper implements WSRPProducer,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public ExpandoBridge getExpandoBridge() {
 		return _wsrpProducer.getExpandoBridge();
 	}
 
@@ -228,7 +233,7 @@ public class WSRPProducerWrapper implements WSRPProducer,
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
+	public Serializable getPrimaryKeyObj() {
 		return _wsrpProducer.getPrimaryKeyObj();
 	}
 
@@ -319,19 +324,17 @@ public class WSRPProducerWrapper implements WSRPProducer,
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_wsrpProducer.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
 		_wsrpProducer.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.service.ServiceContext serviceContext) {
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_wsrpProducer.setExpandoBridgeAttributes(serviceContext);
 	}
 
@@ -401,7 +404,7 @@ public class WSRPProducerWrapper implements WSRPProducer,
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_wsrpProducer.setPrimaryKeyObj(primaryKeyObj);
 	}
 
@@ -436,7 +439,7 @@ public class WSRPProducerWrapper implements WSRPProducer,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.wsrp.model.WSRPProducer> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.wsrp.model.WSRPProducer> toCacheModel() {
 		return _wsrpProducer.toCacheModel();
 	}
 
@@ -482,14 +485,6 @@ public class WSRPProducerWrapper implements WSRPProducer,
 	@Override
 	public StagedModelType getStagedModelType() {
 		return _wsrpProducer.getStagedModelType();
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public WSRPProducer getWrappedWSRPProducer() {
-		return _wsrpProducer;
 	}
 
 	@Override

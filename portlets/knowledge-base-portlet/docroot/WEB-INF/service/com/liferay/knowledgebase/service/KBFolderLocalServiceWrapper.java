@@ -16,7 +16,7 @@ package com.liferay.knowledgebase.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link KBFolderLocalService}.
@@ -50,7 +50,7 @@ public class KBFolderLocalServiceWrapper implements KBFolderLocalService,
 		long groupId, long parentResourceClassNameId,
 		long parentResourcePrimKey, java.lang.String name,
 		java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kbFolderLocalService.addKBFolder(userId, groupId,
 			parentResourceClassNameId, parentResourcePrimKey, name,
@@ -99,8 +99,8 @@ public class KBFolderLocalServiceWrapper implements KBFolderLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kbFolderLocalService.deletePersistedModel(persistedModel);
 	}
@@ -230,8 +230,13 @@ public class KBFolderLocalServiceWrapper implements KBFolderLocalService,
 
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
 		return _kbFolderLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _kbFolderLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	/**
@@ -354,7 +359,7 @@ public class KBFolderLocalServiceWrapper implements KBFolderLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kbFolderLocalService.getPersistedModel(primaryKeyObj);
@@ -393,23 +398,6 @@ public class KBFolderLocalServiceWrapper implements KBFolderLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kbFolderLocalService.updateKBFolder(parentResourceClassNameId,
 			parentResourcePrimKey, kbFolderId, name, description);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public KBFolderLocalService getWrappedKBFolderLocalService() {
-		return _kbFolderLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedKBFolderLocalService(
-		KBFolderLocalService kbFolderLocalService) {
-		_kbFolderLocalService = kbFolderLocalService;
 	}
 
 	@Override

@@ -20,10 +20,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
+import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.InvokableService;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.service.BaseService;
-import com.liferay.portal.service.InvokableService;
+
+import com.liferay.pushnotifications.model.PushNotificationsDevice;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for PushNotificationsDevice. Methods of this
@@ -49,12 +53,12 @@ public interface PushNotificationsDeviceService extends BaseService,
 	 * Never modify or reference this interface directly. Always use {@link PushNotificationsDeviceServiceUtil} to access the push notifications device remote service. Add custom service methods to {@link com.liferay.pushnotifications.service.impl.PushNotificationsDeviceServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@AccessControlled(guestAccessEnabled = true)
-	public com.liferay.pushnotifications.model.PushNotificationsDevice addPushNotificationsDevice(
+	public PushNotificationsDevice addPushNotificationsDevice(
 		java.lang.String token, java.lang.String platform)
 		throws PortalException;
 
 	@AccessControlled(guestAccessEnabled = true)
-	public com.liferay.pushnotifications.model.PushNotificationsDevice deletePushNotificationsDevice(
+	public PushNotificationsDevice deletePushNotificationsDevice(
 		java.lang.String token) throws PortalException;
 
 	/**
@@ -70,7 +74,7 @@ public interface PushNotificationsDeviceService extends BaseService,
 		throws java.lang.Throwable;
 
 	public void sendPushNotification(java.lang.String platform,
-		java.util.List<java.lang.String> tokens, java.lang.String payload)
+		List<java.lang.String> tokens, java.lang.String payload)
 		throws PortalException;
 
 	public void sendPushNotification(long[] toUserIds, java.lang.String payload)

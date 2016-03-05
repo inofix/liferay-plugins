@@ -20,11 +20,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
+import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.InvokableService;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.service.BaseService;
-import com.liferay.portal.service.InvokableService;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for Words. Methods of this
@@ -48,7 +50,7 @@ public interface WordsService extends BaseService, InvokableService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WordsServiceUtil} to access the words remote service. Add custom service methods to {@link com.liferay.words.service.impl.WordsServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public java.util.List<java.lang.String> checkSpelling(java.lang.String text)
+	public List<java.lang.String> checkSpelling(java.lang.String text)
 		throws java.lang.Exception;
 
 	/**
@@ -59,8 +61,8 @@ public interface WordsService extends BaseService, InvokableService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<java.lang.String> getSuggestions(
-		java.lang.String word) throws java.lang.Exception;
+	public List<java.lang.String> getSuggestions(java.lang.String word)
+		throws java.lang.Exception;
 
 	@Override
 	public java.lang.Object invokeMethod(java.lang.String name,

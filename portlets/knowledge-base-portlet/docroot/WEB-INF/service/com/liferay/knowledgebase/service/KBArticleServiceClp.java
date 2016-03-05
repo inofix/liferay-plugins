@@ -16,7 +16,7 @@ package com.liferay.knowledgebase.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.InvokableService;
+import com.liferay.portal.kernel.service.InvokableService;
 
 /**
  * @author Brian Wing Shun Chan
@@ -34,7 +34,7 @@ public class KBArticleServiceClp implements KBArticleService {
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String[][]",
 				"java.lang.String[][]",
-				"com.liferay.portal.service.ServiceContext"
+				"com.liferay.portal.kernel.service.ServiceContext"
 			};
 
 		_methodName1 = "addKBArticlesMarkdown";
@@ -42,7 +42,7 @@ public class KBArticleServiceClp implements KBArticleService {
 		_methodParameterTypes1 = new String[] {
 				"long", "long", "java.lang.String", "boolean",
 				"java.io.InputStream",
-				"com.liferay.portal.service.ServiceContext"
+				"com.liferay.portal.kernel.service.ServiceContext"
 			};
 
 		_methodName2 = "addTempAttachment";
@@ -85,7 +85,7 @@ public class KBArticleServiceClp implements KBArticleService {
 
 		_methodParameterTypes9 = new String[] {
 				"int", "int", "java.lang.String", "java.lang.String",
-				"com.liferay.portal.theme.ThemeDisplay"
+				"com.liferay.portal.kernel.theme.ThemeDisplay"
 			};
 
 		_methodName10 = "getKBArticle";
@@ -110,7 +110,7 @@ public class KBArticleServiceClp implements KBArticleService {
 
 		_methodParameterTypes13 = new String[] {
 				"long", "int", "int", "java.lang.String", "java.lang.String",
-				"com.liferay.portal.theme.ThemeDisplay"
+				"com.liferay.portal.kernel.theme.ThemeDisplay"
 			};
 
 		_methodName14 = "getKBArticleSearchDisplay";
@@ -204,7 +204,8 @@ public class KBArticleServiceClp implements KBArticleService {
 		_methodName31 = "revertKBArticle";
 
 		_methodParameterTypes31 = new String[] {
-				"long", "int", "com.liferay.portal.service.ServiceContext"
+				"long", "int",
+				"com.liferay.portal.kernel.service.ServiceContext"
 			};
 
 		_methodName32 = "subscribeGroupKBArticles";
@@ -229,7 +230,7 @@ public class KBArticleServiceClp implements KBArticleService {
 				"long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String[][]",
 				"java.lang.String[][]", "long[][]",
-				"com.liferay.portal.service.ServiceContext"
+				"com.liferay.portal.kernel.service.ServiceContext"
 			};
 
 		_methodName37 = "updateKBArticlesPriorities";
@@ -244,7 +245,7 @@ public class KBArticleServiceClp implements KBArticleService {
 		java.lang.String urlTitle, java.lang.String content,
 		java.lang.String description, java.lang.String sourceURL,
 		java.lang.String[] sections, java.lang.String[] selectedFileNames,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		Object returnObj = null;
 
@@ -298,7 +299,7 @@ public class KBArticleServiceClp implements KBArticleService {
 	public int addKBArticlesMarkdown(long groupId, long parentKBFolderId,
 		java.lang.String fileName, boolean prioritizeByNumericalPrefix,
 		java.io.InputStream inputStream,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		Object returnObj = null;
 
@@ -561,7 +562,7 @@ public class KBArticleServiceClp implements KBArticleService {
 	@Override
 	public java.lang.String getGroupKBArticlesRSS(int status, int rssDelta,
 		java.lang.String rssDisplayStyle, java.lang.String rssFormat,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		Object returnObj = null;
 
@@ -701,7 +702,7 @@ public class KBArticleServiceClp implements KBArticleService {
 	public java.lang.String getKBArticleRSS(long resourcePrimKey, int status,
 		int rssDelta, java.lang.String rssDisplayStyle,
 		java.lang.String rssFormat,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		Object returnObj = null;
 
@@ -1292,7 +1293,7 @@ public class KBArticleServiceClp implements KBArticleService {
 	@Override
 	public com.liferay.knowledgebase.model.KBArticle revertKBArticle(
 		long resourcePrimKey, int version,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		Object returnObj = null;
 
@@ -1433,7 +1434,7 @@ public class KBArticleServiceClp implements KBArticleService {
 		java.lang.String description, java.lang.String sourceURL,
 		java.lang.String[] sections, java.lang.String[] selectedFileNames,
 		long[] removeFileEntryIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		Object returnObj = null;
 

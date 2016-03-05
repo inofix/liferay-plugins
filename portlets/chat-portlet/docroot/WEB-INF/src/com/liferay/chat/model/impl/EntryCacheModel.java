@@ -18,10 +18,10 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.chat.model.Entry;
 
+import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.CacheModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -108,10 +108,14 @@ public class EntryCacheModel implements CacheModel<Entry>, Externalizable {
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		entryId = objectInput.readLong();
+
 		createDate = objectInput.readLong();
+
 		fromUserId = objectInput.readLong();
+
 		toUserId = objectInput.readLong();
 		content = objectInput.readUTF();
+
 		flag = objectInput.readInt();
 	}
 
@@ -119,8 +123,11 @@ public class EntryCacheModel implements CacheModel<Entry>, Externalizable {
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(entryId);
+
 		objectOutput.writeLong(createDate);
+
 		objectOutput.writeLong(fromUserId);
+
 		objectOutput.writeLong(toUserId);
 
 		if (content == null) {

@@ -16,7 +16,7 @@ package com.liferay.opensocial.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link GadgetService}.
@@ -35,7 +35,7 @@ public class GadgetServiceWrapper implements GadgetService,
 	@Override
 	public com.liferay.opensocial.model.Gadget addGadget(long companyId,
 		java.lang.String url, java.lang.String portletCategoryNames,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _gadgetService.addGadget(companyId, url, portletCategoryNames,
 			serviceContext);
@@ -43,7 +43,7 @@ public class GadgetServiceWrapper implements GadgetService,
 
 	@Override
 	public void deleteGadget(long gadgetId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_gadgetService.deleteGadget(gadgetId, serviceContext);
 	}
@@ -68,26 +68,10 @@ public class GadgetServiceWrapper implements GadgetService,
 	@Override
 	public void updateGadget(long gadgetId,
 		java.lang.String portletCategoryNames,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_gadgetService.updateGadget(gadgetId, portletCategoryNames,
 			serviceContext);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public GadgetService getWrappedGadgetService() {
-		return _gadgetService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedGadgetService(GadgetService gadgetService) {
-		_gadgetService = gadgetService;
 	}
 
 	@Override

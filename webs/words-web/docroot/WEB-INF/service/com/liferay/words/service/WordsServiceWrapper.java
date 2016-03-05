@@ -16,7 +16,7 @@ package com.liferay.words.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link WordsService}.
@@ -59,22 +59,6 @@ public class WordsServiceWrapper implements WordsService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable {
 		return _wordsService.invokeMethod(name, parameterTypes, arguments);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public WordsService getWrappedWordsService() {
-		return _wordsService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedWordsService(WordsService wordsService) {
-		_wordsService = wordsService;
 	}
 
 	@Override

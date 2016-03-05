@@ -16,8 +16,13 @@ package com.liferay.akismet.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.expando.kernel.model.ExpandoBridge;
+
+import com.liferay.portal.kernel.model.ModelWrapper;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelWrapper;
+
+import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -181,7 +186,7 @@ public class AkismetDataWrapper implements AkismetData,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public ExpandoBridge getExpandoBridge() {
 		return _akismetData.getExpandoBridge();
 	}
 
@@ -216,7 +221,7 @@ public class AkismetDataWrapper implements AkismetData,
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
+	public Serializable getPrimaryKeyObj() {
 		return _akismetData.getPrimaryKeyObj();
 	}
 
@@ -337,19 +342,17 @@ public class AkismetDataWrapper implements AkismetData,
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_akismetData.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
 		_akismetData.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.service.ServiceContext serviceContext) {
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_akismetData.setExpandoBridgeAttributes(serviceContext);
 	}
 
@@ -389,7 +392,7 @@ public class AkismetDataWrapper implements AkismetData,
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_akismetData.setPrimaryKeyObj(primaryKeyObj);
 	}
 
@@ -444,7 +447,7 @@ public class AkismetDataWrapper implements AkismetData,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.akismet.model.AkismetData> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.akismet.model.AkismetData> toCacheModel() {
 		return _akismetData.toCacheModel();
 	}
 
@@ -485,14 +488,6 @@ public class AkismetDataWrapper implements AkismetData,
 		}
 
 		return false;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public AkismetData getWrappedAkismetData() {
-		return _akismetData;
 	}
 
 	@Override

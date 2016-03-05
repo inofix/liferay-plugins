@@ -14,12 +14,30 @@
 
 package com.liferay.sync.servlet;
 
+import com.liferay.document.library.kernel.exception.DuplicateFileException;
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
+import com.liferay.document.library.kernel.exception.NoSuchFileVersionException;
+import com.liferay.document.library.kernel.model.DLFileVersion;
+import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Image;
+import com.liferay.portal.kernel.model.ImageConstants;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.ImageServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -29,33 +47,18 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Image;
-import com.liferay.portal.model.ImageConstants;
-import com.liferay.portal.model.User;
-import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.security.permission.PermissionThreadLocal;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.ImageServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.documentlibrary.DuplicateFileException;
-import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
-import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
-import com.liferay.portlet.documentlibrary.model.DLFileVersion;
-import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.sync.SyncSiteUnavailableException;
 import com.liferay.sync.model.SyncDLFileVersionDiff;
+import com.liferay.sync.model.SyncDevice;
 import com.liferay.sync.service.SyncDLFileVersionDiffLocalServiceUtil;
+import com.liferay.sync.service.SyncDeviceLocalServiceUtil;
 import com.liferay.sync.util.PortletPropsValues;
 import com.liferay.sync.util.SyncUtil;
 
@@ -90,6 +93,19 @@ public class DownloadServlet extends HttpServlet {
 			}
 
 			User user = PortalUtil.getUser(request);
+
+			String syncUuid = request.getHeader("Sync-UUID");
+
+			if (syncUuid != null) {
+				SyncDevice syncDevice =
+					SyncDeviceLocalServiceUtil.
+						fetchSyncDeviceByUuidAndCompanyId(
+							syncUuid, user.getCompanyId());
+
+				if (syncDevice != null) {
+					syncDevice.checkStatus();
+				}
+			}
 
 			PermissionChecker permissionChecker =
 				PermissionCheckerFactoryUtil.create(user);
@@ -136,7 +152,7 @@ public class DownloadServlet extends HttpServlet {
 			}
 			else {
 				long groupId = GetterUtil.getLong(pathArray[0]);
-				String uuid = pathArray[1];
+				String fileUuid = pathArray[1];
 
 				Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
@@ -154,11 +170,11 @@ public class DownloadServlet extends HttpServlet {
 
 				if (patch) {
 					sendPatch(
-						request, response, user.getUserId(), groupId, uuid);
+						request, response, user.getUserId(), groupId, fileUuid);
 				}
 				else {
 					sendFile(
-						request, response, user.getUserId(), groupId, uuid);
+						request, response, user.getUserId(), groupId, fileUuid);
 				}
 			}
 		}
@@ -184,14 +200,20 @@ public class DownloadServlet extends HttpServlet {
 			repositoryId, folderId);
 
 		for (FileEntry fileEntry : fileEntries) {
-			InputStream inputStream =
-				DLFileEntryLocalServiceUtil.getFileAsStream(
+			InputStream inputStream = null;
+
+			try {
+				inputStream = DLFileEntryLocalServiceUtil.getFileAsStream(
 					userId, fileEntry.getFileEntryId(), fileEntry.getVersion(),
 					false);
 
-			String filePath = folderPath + fileEntry.getTitle();
+				String filePath = folderPath + fileEntry.getTitle();
 
-			zipWriter.addEntry(filePath, inputStream);
+				zipWriter.addEntry(filePath, inputStream);
+			}
+			finally {
+				StreamUtil.cleanUp(inputStream);
+			}
 		}
 
 		List<Folder> childFolders = DLAppServiceUtil.getFolders(
@@ -364,13 +386,13 @@ public class DownloadServlet extends HttpServlet {
 		if (request.getHeader(HttpHeaders.RANGE) != null) {
 			ServletResponseUtil.sendFileWithRangeHeader(
 				request, response, downloadServletInputStream.getFileName(),
-				downloadServletInputStream.getInputStream(),
+				downloadServletInputStream,
 				downloadServletInputStream.getSize(),
 				downloadServletInputStream.getMimeType());
 		}
 		else {
 			ServletResponseUtil.write(
-				response, downloadServletInputStream.getInputStream(),
+				response, downloadServletInputStream,
 				downloadServletInputStream.getSize());
 		}
 	}
@@ -410,7 +432,7 @@ public class DownloadServlet extends HttpServlet {
 				userId, groupId, uuid, sourceVersionId, targetVersionId);
 
 		ServletResponseUtil.write(
-			response, downloadServletInputStream.getInputStream(),
+			response, downloadServletInputStream,
 			downloadServletInputStream.getSize());
 	}
 
@@ -440,6 +462,8 @@ public class DownloadServlet extends HttpServlet {
 				continue;
 			}
 
+			InputStream inputStream = null;
+
 			try {
 				String uuid = zipObjectJSONObject.getString("uuid");
 
@@ -449,28 +473,28 @@ public class DownloadServlet extends HttpServlet {
 					long targetVersionId = zipObjectJSONObject.getLong(
 						"targetVersionId", 0);
 
-					DownloadServletInputStream downloadServletInputStream =
-						getPatchDownloadServletInputStream(
-							userId, groupId, uuid, sourceVersionId,
-							targetVersionId);
+					inputStream = getPatchDownloadServletInputStream(
+						userId, groupId, uuid, sourceVersionId,
+						targetVersionId);
 
-					zipWriter.addEntry(
-						zipFileId, downloadServletInputStream.getInputStream());
+					zipWriter.addEntry(zipFileId, inputStream);
 				}
 				else {
-					DownloadServletInputStream downloadServletInputStream =
-						getFileDownloadServletInputStream(
-							userId, groupId, uuid,
-							zipObjectJSONObject.getString("version"),
-							zipObjectJSONObject.getLong("versionId"));
+					inputStream = getFileDownloadServletInputStream(
+						userId, groupId, uuid,
+						zipObjectJSONObject.getString("version"),
+						zipObjectJSONObject.getLong("versionId"));
 
-					zipWriter.addEntry(
-						zipFileId, downloadServletInputStream.getInputStream());
+					zipWriter.addEntry(zipFileId, inputStream);
 				}
 			}
 			catch (Exception e) {
-				processException(
-					zipFileId, e.getClass().getName(), errorsJSONObject);
+				Class clazz = e.getClass();
+
+				processException(zipFileId, clazz.getName(), errorsJSONObject);
+			}
+			finally {
+				StreamUtil.cleanUp(inputStream);
 			}
 		}
 

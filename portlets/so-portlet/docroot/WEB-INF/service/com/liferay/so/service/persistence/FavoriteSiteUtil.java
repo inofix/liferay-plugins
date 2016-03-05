@@ -18,9 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.so.model.FavoriteSite;
 
@@ -47,28 +47,28 @@ public class FavoriteSiteUtil {
 	 */
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#clearCache()
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
 		getPersistence().clearCache();
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#clearCache(com.liferay.portal.model.BaseModel)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache(com.liferay.portal.kernel.model.BaseModel)
 	 */
 	public static void clearCache(FavoriteSite favoriteSite) {
 		getPersistence().clearCache(favoriteSite);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
 	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<FavoriteSite> findWithDynamicQuery(
 		DynamicQuery dynamicQuery) {
@@ -76,7 +76,7 @@ public class FavoriteSiteUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<FavoriteSite> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end) {
@@ -84,7 +84,7 @@ public class FavoriteSiteUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
 	 */
 	public static List<FavoriteSite> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
@@ -95,14 +95,14 @@ public class FavoriteSiteUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel)
 	 */
 	public static FavoriteSite update(FavoriteSite favoriteSite) {
 		return getPersistence().update(favoriteSite);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel, ServiceContext)
 	 */
 	public static FavoriteSite update(FavoriteSite favoriteSite,
 		ServiceContext serviceContext) {
@@ -187,7 +187,7 @@ public class FavoriteSiteUtil {
 	*/
 	public static FavoriteSite findByUserId_First(long userId,
 		OrderByComparator<FavoriteSite> orderByComparator)
-		throws com.liferay.so.NoSuchFavoriteSiteException {
+		throws com.liferay.so.exception.NoSuchFavoriteSiteException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
 
@@ -213,7 +213,7 @@ public class FavoriteSiteUtil {
 	*/
 	public static FavoriteSite findByUserId_Last(long userId,
 		OrderByComparator<FavoriteSite> orderByComparator)
-		throws com.liferay.so.NoSuchFavoriteSiteException {
+		throws com.liferay.so.exception.NoSuchFavoriteSiteException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
 
@@ -240,7 +240,7 @@ public class FavoriteSiteUtil {
 	*/
 	public static FavoriteSite[] findByUserId_PrevAndNext(long favoriteSiteId,
 		long userId, OrderByComparator<FavoriteSite> orderByComparator)
-		throws com.liferay.so.NoSuchFavoriteSiteException {
+		throws com.liferay.so.exception.NoSuchFavoriteSiteException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(favoriteSiteId, userId,
 			orderByComparator);
@@ -274,7 +274,7 @@ public class FavoriteSiteUtil {
 	* @throws NoSuchFavoriteSiteException if a matching favorite site could not be found
 	*/
 	public static FavoriteSite findByG_U(long groupId, long userId)
-		throws com.liferay.so.NoSuchFavoriteSiteException {
+		throws com.liferay.so.exception.NoSuchFavoriteSiteException {
 		return getPersistence().findByG_U(groupId, userId);
 	}
 
@@ -310,7 +310,7 @@ public class FavoriteSiteUtil {
 	* @return the favorite site that was removed
 	*/
 	public static FavoriteSite removeByG_U(long groupId, long userId)
-		throws com.liferay.so.NoSuchFavoriteSiteException {
+		throws com.liferay.so.exception.NoSuchFavoriteSiteException {
 		return getPersistence().removeByG_U(groupId, userId);
 	}
 
@@ -361,7 +361,7 @@ public class FavoriteSiteUtil {
 	* @throws NoSuchFavoriteSiteException if a favorite site with the primary key could not be found
 	*/
 	public static FavoriteSite remove(long favoriteSiteId)
-		throws com.liferay.so.NoSuchFavoriteSiteException {
+		throws com.liferay.so.exception.NoSuchFavoriteSiteException {
 		return getPersistence().remove(favoriteSiteId);
 	}
 
@@ -377,7 +377,7 @@ public class FavoriteSiteUtil {
 	* @throws NoSuchFavoriteSiteException if a favorite site with the primary key could not be found
 	*/
 	public static FavoriteSite findByPrimaryKey(long favoriteSiteId)
-		throws com.liferay.so.NoSuchFavoriteSiteException {
+		throws com.liferay.so.exception.NoSuchFavoriteSiteException {
 		return getPersistence().findByPrimaryKey(favoriteSiteId);
 	}
 
@@ -483,13 +483,6 @@ public class FavoriteSiteUtil {
 		}
 
 		return _persistence;
-	}
-
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(FavoriteSitePersistence persistence) {
 	}
 
 	private static FavoriteSitePersistence _persistence;

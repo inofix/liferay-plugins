@@ -18,10 +18,10 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.opensocial.model.OAuthToken;
 
+import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.CacheModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -184,18 +184,22 @@ public class OAuthTokenCacheModel implements CacheModel<OAuthToken>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		oAuthTokenId = objectInput.readLong();
+
 		companyId = objectInput.readLong();
+
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		gadgetKey = objectInput.readUTF();
 		serviceName = objectInput.readUTF();
+
 		moduleId = objectInput.readLong();
 		accessToken = objectInput.readUTF();
 		tokenName = objectInput.readUTF();
 		tokenSecret = objectInput.readUTF();
 		sessionHandle = objectInput.readUTF();
+
 		expiration = objectInput.readLong();
 	}
 
@@ -203,7 +207,9 @@ public class OAuthTokenCacheModel implements CacheModel<OAuthToken>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(oAuthTokenId);
+
 		objectOutput.writeLong(companyId);
+
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {

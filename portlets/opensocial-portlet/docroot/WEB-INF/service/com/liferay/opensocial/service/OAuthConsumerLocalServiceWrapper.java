@@ -16,7 +16,7 @@ package com.liferay.opensocial.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link OAuthConsumerLocalService}.
@@ -102,8 +102,8 @@ public class OAuthConsumerLocalServiceWrapper
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _oAuthConsumerLocalService.deletePersistedModel(persistedModel);
 	}
@@ -212,6 +212,11 @@ public class OAuthConsumerLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _oAuthConsumerLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	@Override
 	public com.liferay.opensocial.model.OAuthConsumer getOAuthConsumer(
 		java.lang.String gadgetKey, java.lang.String serviceName)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -289,7 +294,7 @@ public class OAuthConsumerLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _oAuthConsumerLocalService.getPersistedModel(primaryKeyObj);
@@ -323,23 +328,6 @@ public class OAuthConsumerLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _oAuthConsumerLocalService.updateOAuthConsumer(oAuthConsumerId,
 			consumerKey, consumerSecret, keyType, keyName, callbackURL);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public OAuthConsumerLocalService getWrappedOAuthConsumerLocalService() {
-		return _oAuthConsumerLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedOAuthConsumerLocalService(
-		OAuthConsumerLocalService oAuthConsumerLocalService) {
-		_oAuthConsumerLocalService = oAuthConsumerLocalService;
 	}
 
 	@Override

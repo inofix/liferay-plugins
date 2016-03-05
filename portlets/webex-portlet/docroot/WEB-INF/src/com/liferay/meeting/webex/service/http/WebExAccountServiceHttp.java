@@ -20,9 +20,9 @@ import com.liferay.meeting.webex.service.WebExAccountServiceUtil;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
-import com.liferay.portal.security.auth.HttpPrincipal;
 import com.liferay.portal.service.http.TunnelUtil;
 
 /**
@@ -58,7 +58,7 @@ public class WebExAccountServiceHttp {
 	public static void addWebExAccount(HttpPrincipal httpPrincipal,
 		long groupId, long webExSiteId, java.lang.String login,
 		java.lang.String password,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(WebExAccountServiceUtil.class,
@@ -204,7 +204,7 @@ public class WebExAccountServiceHttp {
 
 	public static void updateWebExAccount(HttpPrincipal httpPrincipal,
 		long webExAccountId, java.lang.String password,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(WebExAccountServiceUtil.class,
@@ -235,7 +235,7 @@ public class WebExAccountServiceHttp {
 	private static final Class<?>[] _addWebExAccountParameterTypes0 = new Class[] {
 			long.class, long.class, java.lang.String.class,
 			java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteWebExAccountParameterTypes1 = new Class[] {
 			long.class
@@ -251,6 +251,6 @@ public class WebExAccountServiceHttp {
 		new Class[] { long.class, long.class };
 	private static final Class<?>[] _updateWebExAccountParameterTypes5 = new Class[] {
 			long.class, java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

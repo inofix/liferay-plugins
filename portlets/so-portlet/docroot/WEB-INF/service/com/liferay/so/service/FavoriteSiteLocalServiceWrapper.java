@@ -16,7 +16,7 @@ package com.liferay.so.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link FavoriteSiteLocalService}.
@@ -100,8 +100,8 @@ public class FavoriteSiteLocalServiceWrapper implements FavoriteSiteLocalService
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _favoriteSiteLocalService.deletePersistedModel(persistedModel);
 	}
@@ -266,6 +266,11 @@ public class FavoriteSiteLocalServiceWrapper implements FavoriteSiteLocalService
 		return _favoriteSiteLocalService.getFavoriteSitesCount(userId, name);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _favoriteSiteLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -277,7 +282,7 @@ public class FavoriteSiteLocalServiceWrapper implements FavoriteSiteLocalService
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _favoriteSiteLocalService.getPersistedModel(primaryKeyObj);
@@ -311,23 +316,6 @@ public class FavoriteSiteLocalServiceWrapper implements FavoriteSiteLocalService
 	public com.liferay.so.model.FavoriteSite updateFavoriteSite(
 		com.liferay.so.model.FavoriteSite favoriteSite) {
 		return _favoriteSiteLocalService.updateFavoriteSite(favoriteSite);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public FavoriteSiteLocalService getWrappedFavoriteSiteLocalService() {
-		return _favoriteSiteLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedFavoriteSiteLocalService(
-		FavoriteSiteLocalService favoriteSiteLocalService) {
-		_favoriteSiteLocalService = favoriteSiteLocalService;
 	}
 
 	@Override

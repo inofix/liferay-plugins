@@ -16,8 +16,9 @@ package com.liferay.mail.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.annotation.ImplementationClassName;
+import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.Accessor;
-import com.liferay.portal.model.PersistedModel;
 
 /**
  * The extended model interface for the Folder service. Represents a row in the &quot;Mail_Folder&quot; database table, with each column mapped to a property of this class.
@@ -28,6 +29,7 @@ import com.liferay.portal.model.PersistedModel;
  * @see com.liferay.mail.model.impl.FolderModelImpl
  * @generated
  */
+@ImplementationClassName("com.liferay.mail.model.impl.FolderImpl")
 @ProviderType
 public interface Folder extends FolderModel, PersistedModel {
 	/*

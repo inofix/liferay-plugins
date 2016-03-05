@@ -18,9 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.socialcoding.model.JIRAProject;
 
@@ -47,28 +47,28 @@ public class JIRAProjectUtil {
 	 */
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#clearCache()
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
 		getPersistence().clearCache();
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#clearCache(com.liferay.portal.model.BaseModel)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache(com.liferay.portal.kernel.model.BaseModel)
 	 */
 	public static void clearCache(JIRAProject jiraProject) {
 		getPersistence().clearCache(jiraProject);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
 	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<JIRAProject> findWithDynamicQuery(
 		DynamicQuery dynamicQuery) {
@@ -76,7 +76,7 @@ public class JIRAProjectUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<JIRAProject> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end) {
@@ -84,7 +84,7 @@ public class JIRAProjectUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
 	 */
 	public static List<JIRAProject> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
@@ -95,14 +95,14 @@ public class JIRAProjectUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel)
 	 */
 	public static JIRAProject update(JIRAProject jiraProject) {
 		return getPersistence().update(jiraProject);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel, ServiceContext)
 	 */
 	public static JIRAProject update(JIRAProject jiraProject,
 		ServiceContext serviceContext) {
@@ -117,7 +117,7 @@ public class JIRAProjectUtil {
 	* @throws NoSuchJIRAProjectException if a matching j i r a project could not be found
 	*/
 	public static JIRAProject findByKey(java.lang.String key)
-		throws com.liferay.socialcoding.NoSuchJIRAProjectException {
+		throws com.liferay.socialcoding.exception.NoSuchJIRAProjectException {
 		return getPersistence().findByKey(key);
 	}
 
@@ -150,7 +150,7 @@ public class JIRAProjectUtil {
 	* @return the j i r a project that was removed
 	*/
 	public static JIRAProject removeByKey(java.lang.String key)
-		throws com.liferay.socialcoding.NoSuchJIRAProjectException {
+		throws com.liferay.socialcoding.exception.NoSuchJIRAProjectException {
 		return getPersistence().removeByKey(key);
 	}
 
@@ -200,7 +200,7 @@ public class JIRAProjectUtil {
 	* @throws NoSuchJIRAProjectException if a j i r a project with the primary key could not be found
 	*/
 	public static JIRAProject remove(long jiraProjectId)
-		throws com.liferay.socialcoding.NoSuchJIRAProjectException {
+		throws com.liferay.socialcoding.exception.NoSuchJIRAProjectException {
 		return getPersistence().remove(jiraProjectId);
 	}
 
@@ -216,7 +216,7 @@ public class JIRAProjectUtil {
 	* @throws NoSuchJIRAProjectException if a j i r a project with the primary key could not be found
 	*/
 	public static JIRAProject findByPrimaryKey(long jiraProjectId)
-		throws com.liferay.socialcoding.NoSuchJIRAProjectException {
+		throws com.liferay.socialcoding.exception.NoSuchJIRAProjectException {
 		return getPersistence().findByPrimaryKey(jiraProjectId);
 	}
 
@@ -326,13 +326,6 @@ public class JIRAProjectUtil {
 		}
 
 		return _persistence;
-	}
-
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(JIRAProjectPersistence persistence) {
 	}
 
 	private static JIRAProjectPersistence _persistence;

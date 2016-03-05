@@ -16,7 +16,7 @@ package com.liferay.twitter.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link FeedLocalService}.
@@ -84,8 +84,8 @@ public class FeedLocalServiceWrapper implements FeedLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _feedLocalService.deletePersistedModel(persistedModel);
 	}
@@ -224,6 +224,11 @@ public class FeedLocalServiceWrapper implements FeedLocalService,
 		return _feedLocalService.getFeedsCount();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _feedLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -235,7 +240,7 @@ public class FeedLocalServiceWrapper implements FeedLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _feedLocalService.getPersistedModel(primaryKeyObj);
@@ -274,22 +279,6 @@ public class FeedLocalServiceWrapper implements FeedLocalService,
 	@Override
 	public void updateFeeds(long companyId) {
 		_feedLocalService.updateFeeds(companyId);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public FeedLocalService getWrappedFeedLocalService() {
-		return _feedLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedFeedLocalService(FeedLocalService feedLocalService) {
-		_feedLocalService = feedLocalService;
 	}
 
 	@Override

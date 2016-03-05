@@ -20,9 +20,9 @@ import com.liferay.knowledgebase.model.KBComment;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.ServiceContext;
 
 import java.util.List;
 
@@ -47,28 +47,28 @@ public class KBCommentUtil {
 	 */
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#clearCache()
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
 		getPersistence().clearCache();
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#clearCache(com.liferay.portal.model.BaseModel)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache(com.liferay.portal.kernel.model.BaseModel)
 	 */
 	public static void clearCache(KBComment kbComment) {
 		getPersistence().clearCache(kbComment);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
 	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<KBComment> findWithDynamicQuery(
 		DynamicQuery dynamicQuery) {
@@ -76,7 +76,7 @@ public class KBCommentUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<KBComment> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end) {
@@ -84,7 +84,7 @@ public class KBCommentUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
 	 */
 	public static List<KBComment> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
@@ -95,14 +95,14 @@ public class KBCommentUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel)
 	 */
 	public static KBComment update(KBComment kbComment) {
 		return getPersistence().update(kbComment);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel, ServiceContext)
 	 */
 	public static KBComment update(KBComment kbComment,
 		ServiceContext serviceContext) {
@@ -186,7 +186,7 @@ public class KBCommentUtil {
 	*/
 	public static KBComment findByUuid_First(java.lang.String uuid,
 		OrderByComparator<KBComment> orderByComparator)
-		throws com.liferay.knowledgebase.NoSuchCommentException {
+		throws com.liferay.knowledgebase.exception.NoSuchCommentException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -212,7 +212,7 @@ public class KBCommentUtil {
 	*/
 	public static KBComment findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<KBComment> orderByComparator)
-		throws com.liferay.knowledgebase.NoSuchCommentException {
+		throws com.liferay.knowledgebase.exception.NoSuchCommentException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -239,7 +239,7 @@ public class KBCommentUtil {
 	*/
 	public static KBComment[] findByUuid_PrevAndNext(long kbCommentId,
 		java.lang.String uuid, OrderByComparator<KBComment> orderByComparator)
-		throws com.liferay.knowledgebase.NoSuchCommentException {
+		throws com.liferay.knowledgebase.exception.NoSuchCommentException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(kbCommentId, uuid, orderByComparator);
 	}
@@ -272,7 +272,7 @@ public class KBCommentUtil {
 	* @throws NoSuchCommentException if a matching k b comment could not be found
 	*/
 	public static KBComment findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.knowledgebase.NoSuchCommentException {
+		throws com.liferay.knowledgebase.exception.NoSuchCommentException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -308,7 +308,7 @@ public class KBCommentUtil {
 	* @return the k b comment that was removed
 	*/
 	public static KBComment removeByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.knowledgebase.NoSuchCommentException {
+		throws com.liferay.knowledgebase.exception.NoSuchCommentException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -409,7 +409,7 @@ public class KBCommentUtil {
 	*/
 	public static KBComment findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<KBComment> orderByComparator)
-		throws com.liferay.knowledgebase.NoSuchCommentException {
+		throws com.liferay.knowledgebase.exception.NoSuchCommentException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -439,7 +439,7 @@ public class KBCommentUtil {
 	*/
 	public static KBComment findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<KBComment> orderByComparator)
-		throws com.liferay.knowledgebase.NoSuchCommentException {
+		throws com.liferay.knowledgebase.exception.NoSuchCommentException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -471,7 +471,7 @@ public class KBCommentUtil {
 	public static KBComment[] findByUuid_C_PrevAndNext(long kbCommentId,
 		java.lang.String uuid, long companyId,
 		OrderByComparator<KBComment> orderByComparator)
-		throws com.liferay.knowledgebase.NoSuchCommentException {
+		throws com.liferay.knowledgebase.exception.NoSuchCommentException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(kbCommentId, uuid, companyId,
 			orderByComparator);
@@ -575,7 +575,7 @@ public class KBCommentUtil {
 	*/
 	public static KBComment findByGroupId_First(long groupId,
 		OrderByComparator<KBComment> orderByComparator)
-		throws com.liferay.knowledgebase.NoSuchCommentException {
+		throws com.liferay.knowledgebase.exception.NoSuchCommentException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -601,7 +601,7 @@ public class KBCommentUtil {
 	*/
 	public static KBComment findByGroupId_Last(long groupId,
 		OrderByComparator<KBComment> orderByComparator)
-		throws com.liferay.knowledgebase.NoSuchCommentException {
+		throws com.liferay.knowledgebase.exception.NoSuchCommentException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -628,7 +628,7 @@ public class KBCommentUtil {
 	*/
 	public static KBComment[] findByGroupId_PrevAndNext(long kbCommentId,
 		long groupId, OrderByComparator<KBComment> orderByComparator)
-		throws com.liferay.knowledgebase.NoSuchCommentException {
+		throws com.liferay.knowledgebase.exception.NoSuchCommentException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(kbCommentId, groupId,
 			orderByComparator);
@@ -737,7 +737,7 @@ public class KBCommentUtil {
 	*/
 	public static KBComment findByG_C_First(long groupId, long classNameId,
 		OrderByComparator<KBComment> orderByComparator)
-		throws com.liferay.knowledgebase.NoSuchCommentException {
+		throws com.liferay.knowledgebase.exception.NoSuchCommentException {
 		return getPersistence()
 				   .findByG_C_First(groupId, classNameId, orderByComparator);
 	}
@@ -767,7 +767,7 @@ public class KBCommentUtil {
 	*/
 	public static KBComment findByG_C_Last(long groupId, long classNameId,
 		OrderByComparator<KBComment> orderByComparator)
-		throws com.liferay.knowledgebase.NoSuchCommentException {
+		throws com.liferay.knowledgebase.exception.NoSuchCommentException {
 		return getPersistence()
 				   .findByG_C_Last(groupId, classNameId, orderByComparator);
 	}
@@ -799,7 +799,7 @@ public class KBCommentUtil {
 	public static KBComment[] findByG_C_PrevAndNext(long kbCommentId,
 		long groupId, long classNameId,
 		OrderByComparator<KBComment> orderByComparator)
-		throws com.liferay.knowledgebase.NoSuchCommentException {
+		throws com.liferay.knowledgebase.exception.NoSuchCommentException {
 		return getPersistence()
 				   .findByG_C_PrevAndNext(kbCommentId, groupId, classNameId,
 			orderByComparator);
@@ -909,7 +909,7 @@ public class KBCommentUtil {
 	*/
 	public static KBComment findByG_S_First(long groupId, int status,
 		OrderByComparator<KBComment> orderByComparator)
-		throws com.liferay.knowledgebase.NoSuchCommentException {
+		throws com.liferay.knowledgebase.exception.NoSuchCommentException {
 		return getPersistence()
 				   .findByG_S_First(groupId, status, orderByComparator);
 	}
@@ -939,7 +939,7 @@ public class KBCommentUtil {
 	*/
 	public static KBComment findByG_S_Last(long groupId, int status,
 		OrderByComparator<KBComment> orderByComparator)
-		throws com.liferay.knowledgebase.NoSuchCommentException {
+		throws com.liferay.knowledgebase.exception.NoSuchCommentException {
 		return getPersistence()
 				   .findByG_S_Last(groupId, status, orderByComparator);
 	}
@@ -970,7 +970,7 @@ public class KBCommentUtil {
 	*/
 	public static KBComment[] findByG_S_PrevAndNext(long kbCommentId,
 		long groupId, int status, OrderByComparator<KBComment> orderByComparator)
-		throws com.liferay.knowledgebase.NoSuchCommentException {
+		throws com.liferay.knowledgebase.exception.NoSuchCommentException {
 		return getPersistence()
 				   .findByG_S_PrevAndNext(kbCommentId, groupId, status,
 			orderByComparator);
@@ -1081,7 +1081,7 @@ public class KBCommentUtil {
 	*/
 	public static KBComment findByC_C_First(long classNameId, long classPK,
 		OrderByComparator<KBComment> orderByComparator)
-		throws com.liferay.knowledgebase.NoSuchCommentException {
+		throws com.liferay.knowledgebase.exception.NoSuchCommentException {
 		return getPersistence()
 				   .findByC_C_First(classNameId, classPK, orderByComparator);
 	}
@@ -1111,7 +1111,7 @@ public class KBCommentUtil {
 	*/
 	public static KBComment findByC_C_Last(long classNameId, long classPK,
 		OrderByComparator<KBComment> orderByComparator)
-		throws com.liferay.knowledgebase.NoSuchCommentException {
+		throws com.liferay.knowledgebase.exception.NoSuchCommentException {
 		return getPersistence()
 				   .findByC_C_Last(classNameId, classPK, orderByComparator);
 	}
@@ -1143,7 +1143,7 @@ public class KBCommentUtil {
 	public static KBComment[] findByC_C_PrevAndNext(long kbCommentId,
 		long classNameId, long classPK,
 		OrderByComparator<KBComment> orderByComparator)
-		throws com.liferay.knowledgebase.NoSuchCommentException {
+		throws com.liferay.knowledgebase.exception.NoSuchCommentException {
 		return getPersistence()
 				   .findByC_C_PrevAndNext(kbCommentId, classNameId, classPK,
 			orderByComparator);
@@ -1263,7 +1263,7 @@ public class KBCommentUtil {
 	*/
 	public static KBComment findByU_C_C_First(long userId, long classNameId,
 		long classPK, OrderByComparator<KBComment> orderByComparator)
-		throws com.liferay.knowledgebase.NoSuchCommentException {
+		throws com.liferay.knowledgebase.exception.NoSuchCommentException {
 		return getPersistence()
 				   .findByU_C_C_First(userId, classNameId, classPK,
 			orderByComparator);
@@ -1297,7 +1297,7 @@ public class KBCommentUtil {
 	*/
 	public static KBComment findByU_C_C_Last(long userId, long classNameId,
 		long classPK, OrderByComparator<KBComment> orderByComparator)
-		throws com.liferay.knowledgebase.NoSuchCommentException {
+		throws com.liferay.knowledgebase.exception.NoSuchCommentException {
 		return getPersistence()
 				   .findByU_C_C_Last(userId, classNameId, classPK,
 			orderByComparator);
@@ -1333,7 +1333,7 @@ public class KBCommentUtil {
 	public static KBComment[] findByU_C_C_PrevAndNext(long kbCommentId,
 		long userId, long classNameId, long classPK,
 		OrderByComparator<KBComment> orderByComparator)
-		throws com.liferay.knowledgebase.NoSuchCommentException {
+		throws com.liferay.knowledgebase.exception.NoSuchCommentException {
 		return getPersistence()
 				   .findByU_C_C_PrevAndNext(kbCommentId, userId, classNameId,
 			classPK, orderByComparator);
@@ -1455,7 +1455,7 @@ public class KBCommentUtil {
 	*/
 	public static KBComment findByC_C_S_First(long classNameId, long classPK,
 		int status, OrderByComparator<KBComment> orderByComparator)
-		throws com.liferay.knowledgebase.NoSuchCommentException {
+		throws com.liferay.knowledgebase.exception.NoSuchCommentException {
 		return getPersistence()
 				   .findByC_C_S_First(classNameId, classPK, status,
 			orderByComparator);
@@ -1489,7 +1489,7 @@ public class KBCommentUtil {
 	*/
 	public static KBComment findByC_C_S_Last(long classNameId, long classPK,
 		int status, OrderByComparator<KBComment> orderByComparator)
-		throws com.liferay.knowledgebase.NoSuchCommentException {
+		throws com.liferay.knowledgebase.exception.NoSuchCommentException {
 		return getPersistence()
 				   .findByC_C_S_Last(classNameId, classPK, status,
 			orderByComparator);
@@ -1525,7 +1525,7 @@ public class KBCommentUtil {
 	public static KBComment[] findByC_C_S_PrevAndNext(long kbCommentId,
 		long classNameId, long classPK, int status,
 		OrderByComparator<KBComment> orderByComparator)
-		throws com.liferay.knowledgebase.NoSuchCommentException {
+		throws com.liferay.knowledgebase.exception.NoSuchCommentException {
 		return getPersistence()
 				   .findByC_C_S_PrevAndNext(kbCommentId, classNameId, classPK,
 			status, orderByComparator);
@@ -1688,7 +1688,7 @@ public class KBCommentUtil {
 	* @throws NoSuchCommentException if a k b comment with the primary key could not be found
 	*/
 	public static KBComment remove(long kbCommentId)
-		throws com.liferay.knowledgebase.NoSuchCommentException {
+		throws com.liferay.knowledgebase.exception.NoSuchCommentException {
 		return getPersistence().remove(kbCommentId);
 	}
 
@@ -1704,7 +1704,7 @@ public class KBCommentUtil {
 	* @throws NoSuchCommentException if a k b comment with the primary key could not be found
 	*/
 	public static KBComment findByPrimaryKey(long kbCommentId)
-		throws com.liferay.knowledgebase.NoSuchCommentException {
+		throws com.liferay.knowledgebase.exception.NoSuchCommentException {
 		return getPersistence().findByPrimaryKey(kbCommentId);
 	}
 
@@ -1814,13 +1814,6 @@ public class KBCommentUtil {
 		}
 
 		return _persistence;
-	}
-
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(KBCommentPersistence persistence) {
 	}
 
 	private static KBCommentPersistence _persistence;

@@ -16,7 +16,7 @@ package com.liferay.mail.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link FolderLocalService}.
@@ -101,8 +101,8 @@ public class FolderLocalServiceWrapper implements FolderLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _folderLocalService.deletePersistedModel(persistedModel);
 	}
@@ -255,6 +255,11 @@ public class FolderLocalServiceWrapper implements FolderLocalService,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _folderLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	@Override
 	public int getLocalPageCount(long folderId, int messagesPerPage) {
 		return _folderLocalService.getLocalPageCount(folderId, messagesPerPage);
 	}
@@ -276,7 +281,7 @@ public class FolderLocalServiceWrapper implements FolderLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _folderLocalService.getPersistedModel(primaryKeyObj);
@@ -314,23 +319,6 @@ public class FolderLocalServiceWrapper implements FolderLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _folderLocalService.updateFolder(folderId, fullName,
 			displayName, remoteMessageCount);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public FolderLocalService getWrappedFolderLocalService() {
-		return _folderLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedFolderLocalService(
-		FolderLocalService folderLocalService) {
-		_folderLocalService = folderLocalService;
 	}
 
 	@Override

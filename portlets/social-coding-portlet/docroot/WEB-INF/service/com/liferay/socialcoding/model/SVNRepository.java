@@ -16,8 +16,9 @@ package com.liferay.socialcoding.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.annotation.ImplementationClassName;
+import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.Accessor;
-import com.liferay.portal.model.PersistedModel;
 
 /**
  * The extended model interface for the SVNRepository service. Represents a row in the &quot;SC_SVNRepository&quot; database table, with each column mapped to a property of this class.
@@ -28,6 +29,7 @@ import com.liferay.portal.model.PersistedModel;
  * @see com.liferay.socialcoding.model.impl.SVNRepositoryModelImpl
  * @generated
  */
+@ImplementationClassName("com.liferay.socialcoding.model.impl.SVNRepositoryImpl")
 @ProviderType
 public interface SVNRepository extends SVNRepositoryModel, PersistedModel {
 	/*

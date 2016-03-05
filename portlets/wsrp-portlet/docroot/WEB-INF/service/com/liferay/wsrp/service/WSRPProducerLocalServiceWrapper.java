@@ -16,7 +16,7 @@ package com.liferay.wsrp.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link WSRPProducerLocalService}.
@@ -37,7 +37,7 @@ public class WSRPProducerLocalServiceWrapper implements WSRPProducerLocalService
 	public com.liferay.wsrp.model.WSRPProducer addWSRPProducer(long userId,
 		long groupId, java.lang.String name, java.lang.String version,
 		java.lang.String portletIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wsrpProducerLocalService.addWSRPProducer(userId, groupId, name,
 			version, portletIds, serviceContext);
@@ -47,7 +47,7 @@ public class WSRPProducerLocalServiceWrapper implements WSRPProducerLocalService
 	public com.liferay.wsrp.model.WSRPProducer addWSRPProducer(long userId,
 		java.lang.String name, java.lang.String version,
 		java.lang.String portletIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wsrpProducerLocalService.addWSRPProducer(userId, name, version,
 			portletIds, serviceContext);
@@ -81,8 +81,8 @@ public class WSRPProducerLocalServiceWrapper implements WSRPProducerLocalService
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wsrpProducerLocalService.deletePersistedModel(persistedModel);
 	}
@@ -233,8 +233,13 @@ public class WSRPProducerLocalServiceWrapper implements WSRPProducerLocalService
 
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
 		return _wsrpProducerLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _wsrpProducerLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	/**
@@ -248,7 +253,7 @@ public class WSRPProducerLocalServiceWrapper implements WSRPProducerLocalService
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wsrpProducerLocalService.getPersistedModel(primaryKeyObj);
@@ -388,23 +393,6 @@ public class WSRPProducerLocalServiceWrapper implements WSRPProducerLocalService
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wsrpProducerLocalService.updateWSRPProducer(wsrpProducerId,
 			name, version, portletIds);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public WSRPProducerLocalService getWrappedWSRPProducerLocalService() {
-		return _wsrpProducerLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedWSRPProducerLocalService(
-		WSRPProducerLocalService wsrpProducerLocalService) {
-		_wsrpProducerLocalService = wsrpProducerLocalService;
 	}
 
 	@Override

@@ -23,10 +23,10 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.util.ClassLoaderObjectInputStream;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.BaseModel;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -315,13 +315,13 @@ public class ClpSerializer {
 
 		String className = clazz.getName();
 
-		if (className.equals("com.liferay.chat.NoSuchEntryException")) {
-			return new com.liferay.chat.NoSuchEntryException(throwable.getMessage(),
+		if (className.equals("com.liferay.chat.exception.NoSuchEntryException")) {
+			return new com.liferay.chat.exception.NoSuchEntryException(throwable.getMessage(),
 				throwable.getCause());
 		}
 
-		if (className.equals("com.liferay.chat.NoSuchStatusException")) {
-			return new com.liferay.chat.NoSuchStatusException(throwable.getMessage(),
+		if (className.equals("com.liferay.chat.exception.NoSuchStatusException")) {
+			return new com.liferay.chat.exception.NoSuchStatusException(throwable.getMessage(),
 				throwable.getCause());
 		}
 

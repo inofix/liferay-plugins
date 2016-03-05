@@ -16,7 +16,7 @@ package com.liferay.opensocial.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link OAuthTokenLocalService}.
@@ -113,8 +113,8 @@ public class OAuthTokenLocalServiceWrapper implements OAuthTokenLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _oAuthTokenLocalService.deletePersistedModel(persistedModel);
 	}
@@ -223,6 +223,11 @@ public class OAuthTokenLocalServiceWrapper implements OAuthTokenLocalService,
 		return _oAuthTokenLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _oAuthTokenLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the o auth token with the primary key.
 	*
@@ -290,7 +295,7 @@ public class OAuthTokenLocalServiceWrapper implements OAuthTokenLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _oAuthTokenLocalService.getPersistedModel(primaryKeyObj);
@@ -314,23 +319,6 @@ public class OAuthTokenLocalServiceWrapper implements OAuthTokenLocalService,
 	public com.liferay.opensocial.model.OAuthToken updateOAuthToken(
 		com.liferay.opensocial.model.OAuthToken oAuthToken) {
 		return _oAuthTokenLocalService.updateOAuthToken(oAuthToken);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public OAuthTokenLocalService getWrappedOAuthTokenLocalService() {
-		return _oAuthTokenLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedOAuthTokenLocalService(
-		OAuthTokenLocalService oAuthTokenLocalService) {
-		_oAuthTokenLocalService = oAuthTokenLocalService;
 	}
 
 	@Override

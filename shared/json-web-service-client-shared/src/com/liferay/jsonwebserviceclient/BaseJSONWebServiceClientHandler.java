@@ -25,6 +25,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Igor Beslic
@@ -39,6 +41,27 @@ public abstract class BaseJSONWebServiceClientHandler {
 
 		objectMapper.enableDefaultTypingAsProperty(
 			ObjectMapper.DefaultTyping.JAVA_LANG_OBJECT, "class");
+	}
+
+	protected String doDelete(
+		String url, Map<String, String> parameters,
+		Map<String, String> headers) {
+
+		JSONWebServiceClient jsonWebServiceClient = getJSONWebServiceClient();
+
+		return jsonWebServiceClient.doDelete(url, parameters, headers);
+	}
+
+	protected String doDelete(String url, String... parametersArray) {
+		JSONWebServiceClient jsonWebServiceClient = getJSONWebServiceClient();
+
+		Map<String, String> parameters = new HashMap<String, String>();
+
+		for (int i = 0; i < parametersArray.length; i += 2) {
+			parameters.put(parametersArray[i], parametersArray[i + 1]);
+		}
+
+		return jsonWebServiceClient.doDelete(url, parameters);
 	}
 
 	protected String doGet(
@@ -77,7 +100,7 @@ public abstract class BaseJSONWebServiceClientHandler {
 
 		if (json.contains("exception\":\"")) {
 			throw new JSONWebServiceInvocationException(
-				getExceptionMessage(json));
+				getExceptionMessage(json), getStatus(json));
 		}
 
 		try {
@@ -97,7 +120,7 @@ public abstract class BaseJSONWebServiceClientHandler {
 			Class<T> clazz, String url, String... parametersArray)
 		throws JSONWebServiceInvocationException {
 
-		Map<String, String> parameters = new HashMap<String, String>();
+		Map<String, String> parameters = new HashMap<>();
 
 		for (int i = 0; i < parametersArray.length; i += 2) {
 			parameters.put(parametersArray[i], parametersArray[i + 1]);
@@ -119,7 +142,7 @@ public abstract class BaseJSONWebServiceClientHandler {
 
 		if (json.contains("exception\":\"")) {
 			throw new JSONWebServiceInvocationException(
-				getExceptionMessage(json));
+				getExceptionMessage(json), getStatus(json));
 		}
 
 		try {
@@ -179,7 +202,7 @@ public abstract class BaseJSONWebServiceClientHandler {
 
 		if (json.contains("exception\":\"")) {
 			throw new JSONWebServiceInvocationException(
-				getExceptionMessage(json));
+				getExceptionMessage(json), getStatus(json));
 		}
 
 		try {
@@ -190,6 +213,27 @@ public abstract class BaseJSONWebServiceClientHandler {
 		}
 	}
 
+	protected String doPut(
+		String url, Map<String, String> parameters,
+		Map<String, String> headers) {
+
+		JSONWebServiceClient jsonWebServiceClient = getJSONWebServiceClient();
+
+		return jsonWebServiceClient.doPut(url, parameters, headers);
+	}
+
+	protected String doPut(String url, String... parametersArray) {
+		JSONWebServiceClient jsonWebServiceClient = getJSONWebServiceClient();
+
+		Map<String, String> parameters = new HashMap<String, String>();
+
+		for (int i = 0; i < parametersArray.length; i += 2) {
+			parameters.put(parametersArray[i], parametersArray[i + 1]);
+		}
+
+		return jsonWebServiceClient.doPut(url, parameters);
+	}
+
 	protected String getExceptionMessage(String json) {
 		int exceptionMessageStart = json.indexOf("exception\":\"") + 12;
 
@@ -198,6 +242,18 @@ public abstract class BaseJSONWebServiceClientHandler {
 		return json.substring(exceptionMessageStart, exceptionMessageEnd);
 	}
 
+	protected int getStatus(String json) {
+		Matcher statusMatcher = _statusPattern.matcher(json);
+
+		if (!statusMatcher.find()) {
+			return 0;
+		}
+
+		return Integer.parseInt(statusMatcher.group(1));
+	}
+
 	protected ObjectMapper objectMapper = new ObjectMapper();
+
+	private Pattern _statusPattern = Pattern.compile("status\":(\\d+)");
 
 }

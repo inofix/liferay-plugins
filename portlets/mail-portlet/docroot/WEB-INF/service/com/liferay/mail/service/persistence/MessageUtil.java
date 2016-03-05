@@ -20,9 +20,9 @@ import com.liferay.mail.model.Message;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.ServiceContext;
 
 import java.util.List;
 
@@ -47,35 +47,35 @@ public class MessageUtil {
 	 */
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#clearCache()
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
 		getPersistence().clearCache();
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#clearCache(com.liferay.portal.model.BaseModel)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache(com.liferay.portal.kernel.model.BaseModel)
 	 */
 	public static void clearCache(Message message) {
 		getPersistence().clearCache(message);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
 	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<Message> findWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<Message> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end) {
@@ -83,7 +83,7 @@ public class MessageUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
 	 */
 	public static List<Message> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
@@ -94,14 +94,14 @@ public class MessageUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel)
 	 */
 	public static Message update(Message message) {
 		return getPersistence().update(message);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel, ServiceContext)
 	 */
 	public static Message update(Message message, ServiceContext serviceContext) {
 		return getPersistence().update(message, serviceContext);
@@ -185,7 +185,7 @@ public class MessageUtil {
 	*/
 	public static Message findByCompanyId_First(long companyId,
 		OrderByComparator<Message> orderByComparator)
-		throws com.liferay.mail.NoSuchMessageException {
+		throws com.liferay.mail.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
 	}
@@ -213,7 +213,7 @@ public class MessageUtil {
 	*/
 	public static Message findByCompanyId_Last(long companyId,
 		OrderByComparator<Message> orderByComparator)
-		throws com.liferay.mail.NoSuchMessageException {
+		throws com.liferay.mail.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -242,7 +242,7 @@ public class MessageUtil {
 	*/
 	public static Message[] findByCompanyId_PrevAndNext(long messageId,
 		long companyId, OrderByComparator<Message> orderByComparator)
-		throws com.liferay.mail.NoSuchMessageException {
+		throws com.liferay.mail.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(messageId, companyId,
 			orderByComparator);
@@ -344,7 +344,7 @@ public class MessageUtil {
 	*/
 	public static Message findByFolderId_First(long folderId,
 		OrderByComparator<Message> orderByComparator)
-		throws com.liferay.mail.NoSuchMessageException {
+		throws com.liferay.mail.exception.NoSuchMessageException {
 		return getPersistence().findByFolderId_First(folderId, orderByComparator);
 	}
 
@@ -371,7 +371,7 @@ public class MessageUtil {
 	*/
 	public static Message findByFolderId_Last(long folderId,
 		OrderByComparator<Message> orderByComparator)
-		throws com.liferay.mail.NoSuchMessageException {
+		throws com.liferay.mail.exception.NoSuchMessageException {
 		return getPersistence().findByFolderId_Last(folderId, orderByComparator);
 	}
 
@@ -398,7 +398,7 @@ public class MessageUtil {
 	*/
 	public static Message[] findByFolderId_PrevAndNext(long messageId,
 		long folderId, OrderByComparator<Message> orderByComparator)
-		throws com.liferay.mail.NoSuchMessageException {
+		throws com.liferay.mail.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByFolderId_PrevAndNext(messageId, folderId,
 			orderByComparator);
@@ -432,7 +432,7 @@ public class MessageUtil {
 	* @throws NoSuchMessageException if a matching message could not be found
 	*/
 	public static Message findByF_R(long folderId, long remoteMessageId)
-		throws com.liferay.mail.NoSuchMessageException {
+		throws com.liferay.mail.exception.NoSuchMessageException {
 		return getPersistence().findByF_R(folderId, remoteMessageId);
 	}
 
@@ -469,7 +469,7 @@ public class MessageUtil {
 	* @return the message that was removed
 	*/
 	public static Message removeByF_R(long folderId, long remoteMessageId)
-		throws com.liferay.mail.NoSuchMessageException {
+		throws com.liferay.mail.exception.NoSuchMessageException {
 		return getPersistence().removeByF_R(folderId, remoteMessageId);
 	}
 
@@ -520,7 +520,7 @@ public class MessageUtil {
 	* @throws NoSuchMessageException if a message with the primary key could not be found
 	*/
 	public static Message remove(long messageId)
-		throws com.liferay.mail.NoSuchMessageException {
+		throws com.liferay.mail.exception.NoSuchMessageException {
 		return getPersistence().remove(messageId);
 	}
 
@@ -536,7 +536,7 @@ public class MessageUtil {
 	* @throws NoSuchMessageException if a message with the primary key could not be found
 	*/
 	public static Message findByPrimaryKey(long messageId)
-		throws com.liferay.mail.NoSuchMessageException {
+		throws com.liferay.mail.exception.NoSuchMessageException {
 		return getPersistence().findByPrimaryKey(messageId);
 	}
 
@@ -645,13 +645,6 @@ public class MessageUtil {
 		}
 
 		return _persistence;
-	}
-
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(MessagePersistence persistence) {
 	}
 
 	private static MessagePersistence _persistence;

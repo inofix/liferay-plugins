@@ -14,18 +14,20 @@
 
 package com.liferay.knowledgebase.service.impl;
 
-import com.liferay.knowledgebase.DuplicateKBArticleUrlTitleException;
-import com.liferay.knowledgebase.InvalidKBArticleUrlTitleException;
-import com.liferay.knowledgebase.KBArticleContentException;
-import com.liferay.knowledgebase.KBArticleParentException;
-import com.liferay.knowledgebase.KBArticlePriorityException;
-import com.liferay.knowledgebase.KBArticleSourceURLException;
-import com.liferay.knowledgebase.KBArticleTitleException;
-import com.liferay.knowledgebase.NoSuchArticleException;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetLink;
+import com.liferay.asset.kernel.model.AssetLinkConstants;
 import com.liferay.knowledgebase.admin.importer.KBArticleImporter;
 import com.liferay.knowledgebase.admin.social.AdminActivityKeys;
 import com.liferay.knowledgebase.admin.util.AdminSubscriptionSender;
 import com.liferay.knowledgebase.admin.util.AdminUtil;
+import com.liferay.knowledgebase.exception.KBArticleContentException;
+import com.liferay.knowledgebase.exception.KBArticleParentException;
+import com.liferay.knowledgebase.exception.KBArticlePriorityException;
+import com.liferay.knowledgebase.exception.KBArticleSourceURLException;
+import com.liferay.knowledgebase.exception.KBArticleTitleException;
+import com.liferay.knowledgebase.exception.KBArticleUrlTitleException;
+import com.liferay.knowledgebase.exception.NoSuchArticleException;
 import com.liferay.knowledgebase.model.KBArticle;
 import com.liferay.knowledgebase.model.KBArticleConstants;
 import com.liferay.knowledgebase.model.KBFolder;
@@ -55,10 +57,18 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ModelHintsUtil;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Subscription;
+import com.liferay.portal.kernel.model.SystemEventConstants;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -67,22 +77,12 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.ResourceConstants;
-import com.liferay.portal.model.Subscription;
-import com.liferay.portal.model.SystemEventConstants;
-import com.liferay.portal.model.User;
-import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.SubscriptionSender;
-import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.model.AssetLink;
-import com.liferay.portlet.asset.model.AssetLinkConstants;
 
 import java.io.InputStream;
 
@@ -1699,7 +1699,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 				groupId, kbFolderId, uniqueUrlTitle, _STATUSES);
 
 			for (int i = 1; kbArticlesCount > 0; i++) {
-				uniqueUrlTitle = urlTitle + StringPool.DASH + i;
+				uniqueUrlTitle = getUniqueUrlTitle(urlTitle, i);
 
 				kbArticlesCount = kbArticlePersistence.countByG_KBFI_UT_ST(
 					groupId, kbFolderId, uniqueUrlTitle, _STATUSES);
@@ -1714,7 +1714,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			groupId, kbFolder.getUrlTitle(), uniqueUrlTitle, _STATUSES);
 
 		for (int i = 1; kbArticlesCount > 0; i++) {
-			uniqueUrlTitle = urlTitle + StringPool.DASH + i;
+			uniqueUrlTitle = getUniqueUrlTitle(urlTitle, i);
 
 			kbArticlesCount = kbArticleFinder.countByUrlTitle(
 				groupId, kbFolder.getUrlTitle(), uniqueUrlTitle, _STATUSES);
@@ -1733,6 +1733,16 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		}
 
 		return urlTitle.substring(1);
+	}
+
+	protected String getUniqueUrlTitle(String urlTitle, int suffix) {
+		String uniqueUrlTitle = urlTitle + StringPool.DASH + suffix;
+
+		int maxLength = ModelHintsUtil.getMaxLength(
+			KBArticle.class.getName(), "urlTitle");
+
+		return StringUtil.shorten(
+			uniqueUrlTitle, maxLength, StringPool.DASH + suffix);
 	}
 
 	protected boolean isValidFileName(String name) {
@@ -1905,13 +1915,14 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		// Sync indexed permission fields
 
-		SearchEngineUtil.updatePermissionFields(
+		IndexWriterHelperUtil.updatePermissionFields(
 			KBArticle.class.getName(), String.valueOf(resourcePrimKey));
 	}
 
 	protected void validate(double priority) throws PortalException {
 		if (priority <= 0) {
-			throw new KBArticlePriorityException();
+			throw new KBArticlePriorityException(
+				"Invalid priority " + priority);
 		}
 	}
 
@@ -1919,11 +1930,11 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		throws PortalException {
 
 		if (Validator.isNull(title)) {
-			throw new KBArticleTitleException();
+			throw new KBArticleTitleException("Title is null");
 		}
 
 		if (Validator.isNull(content)) {
-			throw new KBArticleContentException();
+			throw new KBArticleContentException("Content is null");
 		}
 
 		validateSourceURL(sourceURL);
@@ -1968,17 +1979,23 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		}
 
 		if (!KnowledgeBaseUtil.isValidUrlTitle(urlTitle)) {
-			throw new InvalidKBArticleUrlTitleException(
-				"URL title must start with a '/' and contain only " +
-					"alphanumeric characters, dashes, and underscores");
+			throw new KBArticleUrlTitleException.
+				MustNotContainInvalidCharacters(urlTitle);
+		}
+
+		int urlTitleMaxSize = ModelHintsUtil.getMaxLength(
+			KBArticle.class.getName(), "urlTitle");
+
+		if (urlTitle.length() > urlTitleMaxSize) {
+			throw new KBArticleUrlTitleException.MustNotExceedMaximumSize(
+				urlTitle, urlTitleMaxSize);
 		}
 
 		Collection<KBArticle> kbArticles = kbArticlePersistence.findByG_KBFI_UT(
 			groupId, kbFolderId, urlTitle.substring(1));
 
 		if (!kbArticles.isEmpty()) {
-			throw new DuplicateKBArticleUrlTitleException(
-				"Duplicate URL title " + urlTitle);
+			throw new KBArticleUrlTitleException.MustNotBeDuplicate(urlTitle);
 		}
 	}
 

@@ -16,7 +16,7 @@ package com.liferay.contacts.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link EntryService}.
@@ -55,22 +55,6 @@ public class EntryServiceWrapper implements EntryService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _entryService.searchUsersAndContacts(companyId, keywords, start,
 			end);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public EntryService getWrappedEntryService() {
-		return _entryService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedEntryService(EntryService entryService) {
-		_entryService = entryService;
 	}
 
 	@Override

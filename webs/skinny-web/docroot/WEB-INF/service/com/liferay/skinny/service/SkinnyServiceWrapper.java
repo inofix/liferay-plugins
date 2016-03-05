@@ -16,7 +16,7 @@ package com.liferay.skinny.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link SkinnyService}.
@@ -61,22 +61,6 @@ public class SkinnyServiceWrapper implements SkinnyService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable {
 		return _skinnyService.invokeMethod(name, parameterTypes, arguments);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public SkinnyService getWrappedSkinnyService() {
-		return _skinnyService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedSkinnyService(SkinnyService skinnyService) {
-		_skinnyService = skinnyService;
 	}
 
 	@Override

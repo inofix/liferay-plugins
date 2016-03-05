@@ -18,9 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.socialcoding.model.JIRAChangeGroup;
 
@@ -47,28 +47,28 @@ public class JIRAChangeGroupUtil {
 	 */
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#clearCache()
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
 		getPersistence().clearCache();
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#clearCache(com.liferay.portal.model.BaseModel)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache(com.liferay.portal.kernel.model.BaseModel)
 	 */
 	public static void clearCache(JIRAChangeGroup jiraChangeGroup) {
 		getPersistence().clearCache(jiraChangeGroup);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
 	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<JIRAChangeGroup> findWithDynamicQuery(
 		DynamicQuery dynamicQuery) {
@@ -76,7 +76,7 @@ public class JIRAChangeGroupUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<JIRAChangeGroup> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end) {
@@ -84,7 +84,7 @@ public class JIRAChangeGroupUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
 	 */
 	public static List<JIRAChangeGroup> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
@@ -95,14 +95,14 @@ public class JIRAChangeGroupUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel)
 	 */
 	public static JIRAChangeGroup update(JIRAChangeGroup jiraChangeGroup) {
 		return getPersistence().update(jiraChangeGroup);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel, ServiceContext)
 	 */
 	public static JIRAChangeGroup update(JIRAChangeGroup jiraChangeGroup,
 		ServiceContext serviceContext) {
@@ -191,7 +191,7 @@ public class JIRAChangeGroupUtil {
 	public static JIRAChangeGroup findByJiraUserId_First(
 		java.lang.String jiraUserId,
 		OrderByComparator<JIRAChangeGroup> orderByComparator)
-		throws com.liferay.socialcoding.NoSuchJIRAChangeGroupException {
+		throws com.liferay.socialcoding.exception.NoSuchJIRAChangeGroupException {
 		return getPersistence()
 				   .findByJiraUserId_First(jiraUserId, orderByComparator);
 	}
@@ -221,7 +221,7 @@ public class JIRAChangeGroupUtil {
 	public static JIRAChangeGroup findByJiraUserId_Last(
 		java.lang.String jiraUserId,
 		OrderByComparator<JIRAChangeGroup> orderByComparator)
-		throws com.liferay.socialcoding.NoSuchJIRAChangeGroupException {
+		throws com.liferay.socialcoding.exception.NoSuchJIRAChangeGroupException {
 		return getPersistence()
 				   .findByJiraUserId_Last(jiraUserId, orderByComparator);
 	}
@@ -252,7 +252,7 @@ public class JIRAChangeGroupUtil {
 	public static JIRAChangeGroup[] findByJiraUserId_PrevAndNext(
 		long jiraChangeGroupId, java.lang.String jiraUserId,
 		OrderByComparator<JIRAChangeGroup> orderByComparator)
-		throws com.liferay.socialcoding.NoSuchJIRAChangeGroupException {
+		throws com.liferay.socialcoding.exception.NoSuchJIRAChangeGroupException {
 		return getPersistence()
 				   .findByJiraUserId_PrevAndNext(jiraChangeGroupId, jiraUserId,
 			orderByComparator);
@@ -356,7 +356,7 @@ public class JIRAChangeGroupUtil {
 	*/
 	public static JIRAChangeGroup findByJiraIssueId_First(long jiraIssueId,
 		OrderByComparator<JIRAChangeGroup> orderByComparator)
-		throws com.liferay.socialcoding.NoSuchJIRAChangeGroupException {
+		throws com.liferay.socialcoding.exception.NoSuchJIRAChangeGroupException {
 		return getPersistence()
 				   .findByJiraIssueId_First(jiraIssueId, orderByComparator);
 	}
@@ -384,7 +384,7 @@ public class JIRAChangeGroupUtil {
 	*/
 	public static JIRAChangeGroup findByJiraIssueId_Last(long jiraIssueId,
 		OrderByComparator<JIRAChangeGroup> orderByComparator)
-		throws com.liferay.socialcoding.NoSuchJIRAChangeGroupException {
+		throws com.liferay.socialcoding.exception.NoSuchJIRAChangeGroupException {
 		return getPersistence()
 				   .findByJiraIssueId_Last(jiraIssueId, orderByComparator);
 	}
@@ -414,7 +414,7 @@ public class JIRAChangeGroupUtil {
 	public static JIRAChangeGroup[] findByJiraIssueId_PrevAndNext(
 		long jiraChangeGroupId, long jiraIssueId,
 		OrderByComparator<JIRAChangeGroup> orderByComparator)
-		throws com.liferay.socialcoding.NoSuchJIRAChangeGroupException {
+		throws com.liferay.socialcoding.exception.NoSuchJIRAChangeGroupException {
 		return getPersistence()
 				   .findByJiraIssueId_PrevAndNext(jiraChangeGroupId,
 			jiraIssueId, orderByComparator);
@@ -475,7 +475,7 @@ public class JIRAChangeGroupUtil {
 	* @throws NoSuchJIRAChangeGroupException if a j i r a change group with the primary key could not be found
 	*/
 	public static JIRAChangeGroup remove(long jiraChangeGroupId)
-		throws com.liferay.socialcoding.NoSuchJIRAChangeGroupException {
+		throws com.liferay.socialcoding.exception.NoSuchJIRAChangeGroupException {
 		return getPersistence().remove(jiraChangeGroupId);
 	}
 
@@ -491,7 +491,7 @@ public class JIRAChangeGroupUtil {
 	* @throws NoSuchJIRAChangeGroupException if a j i r a change group with the primary key could not be found
 	*/
 	public static JIRAChangeGroup findByPrimaryKey(long jiraChangeGroupId)
-		throws com.liferay.socialcoding.NoSuchJIRAChangeGroupException {
+		throws com.liferay.socialcoding.exception.NoSuchJIRAChangeGroupException {
 		return getPersistence().findByPrimaryKey(jiraChangeGroupId);
 	}
 
@@ -601,13 +601,6 @@ public class JIRAChangeGroupUtil {
 		}
 
 		return _persistence;
-	}
-
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(JIRAChangeGroupPersistence persistence) {
 	}
 
 	private static JIRAChangeGroupPersistence _persistence;

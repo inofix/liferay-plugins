@@ -16,7 +16,7 @@ package com.liferay.so.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link MemberRequestLocalService}.
@@ -51,7 +51,7 @@ public class MemberRequestLocalServiceWrapper
 		long groupId, long receiverUserId,
 		java.lang.String receiverEmailAddress, long invitedRoleId,
 		long invitedTeamId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _memberRequestLocalService.addMemberRequest(userId, groupId,
 			receiverUserId, receiverEmailAddress, invitedRoleId, invitedTeamId,
@@ -62,7 +62,7 @@ public class MemberRequestLocalServiceWrapper
 	public void addMemberRequests(long userId, long groupId,
 		java.lang.String[] emailAddresses, long invitedRoleId,
 		long invitedTeamId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_memberRequestLocalService.addMemberRequests(userId, groupId,
 			emailAddresses, invitedRoleId, invitedTeamId, serviceContext);
@@ -71,7 +71,7 @@ public class MemberRequestLocalServiceWrapper
 	@Override
 	public void addMemberRequests(long userId, long groupId,
 		long[] receiverUserIds, long invitedRoleId, long invitedTeamId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_memberRequestLocalService.addMemberRequests(userId, groupId,
 			receiverUserIds, invitedRoleId, invitedTeamId, serviceContext);
@@ -119,8 +119,8 @@ public class MemberRequestLocalServiceWrapper
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _memberRequestLocalService.deletePersistedModel(persistedModel);
 	}
@@ -222,6 +222,11 @@ public class MemberRequestLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _memberRequestLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	@Override
 	public com.liferay.so.model.MemberRequest getMemberRequest(long groupId,
 		long receiverUserId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -281,7 +286,7 @@ public class MemberRequestLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _memberRequestLocalService.getPersistedModel(primaryKeyObj);
@@ -352,23 +357,6 @@ public class MemberRequestLocalServiceWrapper
 		long memberRequestId, int status) throws java.lang.Exception {
 		return _memberRequestLocalService.updateMemberRequest(userId,
 			memberRequestId, status);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public MemberRequestLocalService getWrappedMemberRequestLocalService() {
-		return _memberRequestLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedMemberRequestLocalService(
-		MemberRequestLocalService memberRequestLocalService) {
-		_memberRequestLocalService = memberRequestLocalService;
 	}
 
 	@Override

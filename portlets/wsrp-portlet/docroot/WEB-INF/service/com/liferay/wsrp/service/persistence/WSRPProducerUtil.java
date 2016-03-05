@@ -18,9 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.wsrp.model.WSRPProducer;
 
@@ -47,28 +47,28 @@ public class WSRPProducerUtil {
 	 */
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#clearCache()
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
 		getPersistence().clearCache();
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#clearCache(com.liferay.portal.model.BaseModel)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache(com.liferay.portal.kernel.model.BaseModel)
 	 */
 	public static void clearCache(WSRPProducer wsrpProducer) {
 		getPersistence().clearCache(wsrpProducer);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
 	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<WSRPProducer> findWithDynamicQuery(
 		DynamicQuery dynamicQuery) {
@@ -76,7 +76,7 @@ public class WSRPProducerUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<WSRPProducer> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end) {
@@ -84,7 +84,7 @@ public class WSRPProducerUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
 	 */
 	public static List<WSRPProducer> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
@@ -95,14 +95,14 @@ public class WSRPProducerUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel)
 	 */
 	public static WSRPProducer update(WSRPProducer wsrpProducer) {
 		return getPersistence().update(wsrpProducer);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel, ServiceContext)
 	 */
 	public static WSRPProducer update(WSRPProducer wsrpProducer,
 		ServiceContext serviceContext) {
@@ -186,7 +186,7 @@ public class WSRPProducerUtil {
 	*/
 	public static WSRPProducer findByUuid_First(java.lang.String uuid,
 		OrderByComparator<WSRPProducer> orderByComparator)
-		throws com.liferay.wsrp.NoSuchProducerException {
+		throws com.liferay.wsrp.exception.NoSuchProducerException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -212,7 +212,7 @@ public class WSRPProducerUtil {
 	*/
 	public static WSRPProducer findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<WSRPProducer> orderByComparator)
-		throws com.liferay.wsrp.NoSuchProducerException {
+		throws com.liferay.wsrp.exception.NoSuchProducerException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -239,7 +239,7 @@ public class WSRPProducerUtil {
 	*/
 	public static WSRPProducer[] findByUuid_PrevAndNext(long wsrpProducerId,
 		java.lang.String uuid, OrderByComparator<WSRPProducer> orderByComparator)
-		throws com.liferay.wsrp.NoSuchProducerException {
+		throws com.liferay.wsrp.exception.NoSuchProducerException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(wsrpProducerId, uuid,
 			orderByComparator);
@@ -273,7 +273,7 @@ public class WSRPProducerUtil {
 	* @throws NoSuchProducerException if a matching w s r p producer could not be found
 	*/
 	public static WSRPProducer findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.wsrp.NoSuchProducerException {
+		throws com.liferay.wsrp.exception.NoSuchProducerException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -309,7 +309,7 @@ public class WSRPProducerUtil {
 	* @return the w s r p producer that was removed
 	*/
 	public static WSRPProducer removeByUUID_G(java.lang.String uuid,
-		long groupId) throws com.liferay.wsrp.NoSuchProducerException {
+		long groupId) throws com.liferay.wsrp.exception.NoSuchProducerException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -410,7 +410,7 @@ public class WSRPProducerUtil {
 	*/
 	public static WSRPProducer findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<WSRPProducer> orderByComparator)
-		throws com.liferay.wsrp.NoSuchProducerException {
+		throws com.liferay.wsrp.exception.NoSuchProducerException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -440,7 +440,7 @@ public class WSRPProducerUtil {
 	*/
 	public static WSRPProducer findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<WSRPProducer> orderByComparator)
-		throws com.liferay.wsrp.NoSuchProducerException {
+		throws com.liferay.wsrp.exception.NoSuchProducerException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -472,7 +472,7 @@ public class WSRPProducerUtil {
 	public static WSRPProducer[] findByUuid_C_PrevAndNext(long wsrpProducerId,
 		java.lang.String uuid, long companyId,
 		OrderByComparator<WSRPProducer> orderByComparator)
-		throws com.liferay.wsrp.NoSuchProducerException {
+		throws com.liferay.wsrp.exception.NoSuchProducerException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(wsrpProducerId, uuid, companyId,
 			orderByComparator);
@@ -577,7 +577,7 @@ public class WSRPProducerUtil {
 	*/
 	public static WSRPProducer findByCompanyId_First(long companyId,
 		OrderByComparator<WSRPProducer> orderByComparator)
-		throws com.liferay.wsrp.NoSuchProducerException {
+		throws com.liferay.wsrp.exception.NoSuchProducerException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
 	}
@@ -605,7 +605,7 @@ public class WSRPProducerUtil {
 	*/
 	public static WSRPProducer findByCompanyId_Last(long companyId,
 		OrderByComparator<WSRPProducer> orderByComparator)
-		throws com.liferay.wsrp.NoSuchProducerException {
+		throws com.liferay.wsrp.exception.NoSuchProducerException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -635,7 +635,7 @@ public class WSRPProducerUtil {
 	public static WSRPProducer[] findByCompanyId_PrevAndNext(
 		long wsrpProducerId, long companyId,
 		OrderByComparator<WSRPProducer> orderByComparator)
-		throws com.liferay.wsrp.NoSuchProducerException {
+		throws com.liferay.wsrp.exception.NoSuchProducerException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(wsrpProducerId, companyId,
 			orderByComparator);
@@ -696,7 +696,7 @@ public class WSRPProducerUtil {
 	* @throws NoSuchProducerException if a w s r p producer with the primary key could not be found
 	*/
 	public static WSRPProducer remove(long wsrpProducerId)
-		throws com.liferay.wsrp.NoSuchProducerException {
+		throws com.liferay.wsrp.exception.NoSuchProducerException {
 		return getPersistence().remove(wsrpProducerId);
 	}
 
@@ -712,7 +712,7 @@ public class WSRPProducerUtil {
 	* @throws NoSuchProducerException if a w s r p producer with the primary key could not be found
 	*/
 	public static WSRPProducer findByPrimaryKey(long wsrpProducerId)
-		throws com.liferay.wsrp.NoSuchProducerException {
+		throws com.liferay.wsrp.exception.NoSuchProducerException {
 		return getPersistence().findByPrimaryKey(wsrpProducerId);
 	}
 
@@ -822,13 +822,6 @@ public class WSRPProducerUtil {
 		}
 
 		return _persistence;
-	}
-
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(WSRPProducerPersistence persistence) {
 	}
 
 	private static WSRPProducerPersistence _persistence;

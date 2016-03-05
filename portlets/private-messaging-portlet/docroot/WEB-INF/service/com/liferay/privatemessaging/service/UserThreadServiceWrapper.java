@@ -16,7 +16,7 @@ package com.liferay.privatemessaging.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link UserThreadService}.
@@ -33,7 +33,7 @@ public class UserThreadServiceWrapper implements UserThreadService,
 	}
 
 	@Override
-	public com.liferay.portlet.messageboards.model.MBMessage getLastThreadMessage(
+	public com.liferay.message.boards.kernel.model.MBMessage getLastThreadMessage(
 		long mbThreadId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userThreadService.getLastThreadMessage(mbThreadId);
@@ -50,7 +50,7 @@ public class UserThreadServiceWrapper implements UserThreadService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getThreadMessages(
+	public java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getThreadMessages(
 		long mbThreadId, int start, int end, boolean ascending)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userThreadService.getThreadMessages(mbThreadId, start, end,
@@ -66,7 +66,7 @@ public class UserThreadServiceWrapper implements UserThreadService,
 	@Override
 	public java.util.List<com.liferay.privatemessaging.model.UserThread> getUserUserThreads(
 		boolean deleted)
-		throws com.liferay.portal.security.auth.PrincipalException {
+		throws com.liferay.portal.kernel.security.auth.PrincipalException {
 		return _userThreadService.getUserUserThreads(deleted);
 	}
 
@@ -75,22 +75,6 @@ public class UserThreadServiceWrapper implements UserThreadService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable {
 		return _userThreadService.invokeMethod(name, parameterTypes, arguments);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public UserThreadService getWrappedUserThreadService() {
-		return _userThreadService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedUserThreadService(UserThreadService userThreadService) {
-		_userThreadService = userThreadService;
 	}
 
 	@Override

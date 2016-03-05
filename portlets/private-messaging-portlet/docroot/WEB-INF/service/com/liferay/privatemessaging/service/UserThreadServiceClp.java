@@ -16,7 +16,7 @@ package com.liferay.privatemessaging.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.InvokableService;
+import com.liferay.portal.kernel.service.InvokableService;
 
 /**
  * @author Brian Wing Shun Chan
@@ -49,7 +49,7 @@ public class UserThreadServiceClp implements UserThreadService {
 	}
 
 	@Override
-	public com.liferay.portlet.messageboards.model.MBMessage getLastThreadMessage(
+	public com.liferay.message.boards.kernel.model.MBMessage getLastThreadMessage(
 		long mbThreadId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		Object returnObj = null;
@@ -74,7 +74,7 @@ public class UserThreadServiceClp implements UserThreadService {
 			}
 		}
 
-		return (com.liferay.portlet.messageboards.model.MBMessage)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.message.boards.kernel.model.MBMessage)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
@@ -101,7 +101,7 @@ public class UserThreadServiceClp implements UserThreadService {
 	}
 
 	@Override
-	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getThreadMessages(
+	public java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getThreadMessages(
 		long mbThreadId, int start, int end, boolean ascending)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		Object returnObj = null;
@@ -127,7 +127,7 @@ public class UserThreadServiceClp implements UserThreadService {
 			}
 		}
 
-		return (java.util.List<com.liferay.portlet.messageboards.model.MBMessage>)ClpSerializer.translateOutput(returnObj);
+		return (java.util.List<com.liferay.message.boards.kernel.model.MBMessage>)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
@@ -161,7 +161,7 @@ public class UserThreadServiceClp implements UserThreadService {
 	@Override
 	public java.util.List<com.liferay.privatemessaging.model.UserThread> getUserUserThreads(
 		boolean deleted)
-		throws com.liferay.portal.security.auth.PrincipalException {
+		throws com.liferay.portal.kernel.security.auth.PrincipalException {
 		Object returnObj = null;
 
 		try {
@@ -171,8 +171,8 @@ public class UserThreadServiceClp implements UserThreadService {
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
 
-			if (t instanceof com.liferay.portal.security.auth.PrincipalException) {
-				throw (com.liferay.portal.security.auth.PrincipalException)t;
+			if (t instanceof com.liferay.portal.kernel.security.auth.PrincipalException) {
+				throw (com.liferay.portal.kernel.security.auth.PrincipalException)t;
 			}
 
 			if (t instanceof RuntimeException) {

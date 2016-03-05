@@ -20,9 +20,9 @@ import com.liferay.opensocial.model.OAuthToken;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.ServiceContext;
 
 import java.util.List;
 
@@ -47,28 +47,28 @@ public class OAuthTokenUtil {
 	 */
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#clearCache()
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
 		getPersistence().clearCache();
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#clearCache(com.liferay.portal.model.BaseModel)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache(com.liferay.portal.kernel.model.BaseModel)
 	 */
 	public static void clearCache(OAuthToken oAuthToken) {
 		getPersistence().clearCache(oAuthToken);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
 	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<OAuthToken> findWithDynamicQuery(
 		DynamicQuery dynamicQuery) {
@@ -76,7 +76,7 @@ public class OAuthTokenUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<OAuthToken> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end) {
@@ -84,7 +84,7 @@ public class OAuthTokenUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
 	 */
 	public static List<OAuthToken> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
@@ -95,14 +95,14 @@ public class OAuthTokenUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel)
 	 */
 	public static OAuthToken update(OAuthToken oAuthToken) {
 		return getPersistence().update(oAuthToken);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel, ServiceContext)
 	 */
 	public static OAuthToken update(OAuthToken oAuthToken,
 		ServiceContext serviceContext) {
@@ -197,7 +197,7 @@ public class OAuthTokenUtil {
 	public static OAuthToken findByG_S_First(java.lang.String gadgetKey,
 		java.lang.String serviceName,
 		OrderByComparator<OAuthToken> orderByComparator)
-		throws com.liferay.opensocial.NoSuchOAuthTokenException {
+		throws com.liferay.opensocial.exception.NoSuchOAuthTokenException {
 		return getPersistence()
 				   .findByG_S_First(gadgetKey, serviceName, orderByComparator);
 	}
@@ -229,7 +229,7 @@ public class OAuthTokenUtil {
 	public static OAuthToken findByG_S_Last(java.lang.String gadgetKey,
 		java.lang.String serviceName,
 		OrderByComparator<OAuthToken> orderByComparator)
-		throws com.liferay.opensocial.NoSuchOAuthTokenException {
+		throws com.liferay.opensocial.exception.NoSuchOAuthTokenException {
 		return getPersistence()
 				   .findByG_S_Last(gadgetKey, serviceName, orderByComparator);
 	}
@@ -262,7 +262,7 @@ public class OAuthTokenUtil {
 	public static OAuthToken[] findByG_S_PrevAndNext(long oAuthTokenId,
 		java.lang.String gadgetKey, java.lang.String serviceName,
 		OrderByComparator<OAuthToken> orderByComparator)
-		throws com.liferay.opensocial.NoSuchOAuthTokenException {
+		throws com.liferay.opensocial.exception.NoSuchOAuthTokenException {
 		return getPersistence()
 				   .findByG_S_PrevAndNext(oAuthTokenId, gadgetKey, serviceName,
 			orderByComparator);
@@ -305,7 +305,7 @@ public class OAuthTokenUtil {
 	public static OAuthToken findByU_G_S_M_T(long userId,
 		java.lang.String gadgetKey, java.lang.String serviceName,
 		long moduleId, java.lang.String tokenName)
-		throws com.liferay.opensocial.NoSuchOAuthTokenException {
+		throws com.liferay.opensocial.exception.NoSuchOAuthTokenException {
 		return getPersistence()
 				   .findByU_G_S_M_T(userId, gadgetKey, serviceName, moduleId,
 			tokenName);
@@ -361,7 +361,7 @@ public class OAuthTokenUtil {
 	public static OAuthToken removeByU_G_S_M_T(long userId,
 		java.lang.String gadgetKey, java.lang.String serviceName,
 		long moduleId, java.lang.String tokenName)
-		throws com.liferay.opensocial.NoSuchOAuthTokenException {
+		throws com.liferay.opensocial.exception.NoSuchOAuthTokenException {
 		return getPersistence()
 				   .removeByU_G_S_M_T(userId, gadgetKey, serviceName, moduleId,
 			tokenName);
@@ -420,7 +420,7 @@ public class OAuthTokenUtil {
 	* @throws NoSuchOAuthTokenException if a o auth token with the primary key could not be found
 	*/
 	public static OAuthToken remove(long oAuthTokenId)
-		throws com.liferay.opensocial.NoSuchOAuthTokenException {
+		throws com.liferay.opensocial.exception.NoSuchOAuthTokenException {
 		return getPersistence().remove(oAuthTokenId);
 	}
 
@@ -436,7 +436,7 @@ public class OAuthTokenUtil {
 	* @throws NoSuchOAuthTokenException if a o auth token with the primary key could not be found
 	*/
 	public static OAuthToken findByPrimaryKey(long oAuthTokenId)
-		throws com.liferay.opensocial.NoSuchOAuthTokenException {
+		throws com.liferay.opensocial.exception.NoSuchOAuthTokenException {
 		return getPersistence().findByPrimaryKey(oAuthTokenId);
 	}
 
@@ -542,13 +542,6 @@ public class OAuthTokenUtil {
 		}
 
 		return _persistence;
-	}
-
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(OAuthTokenPersistence persistence) {
 	}
 
 	private static OAuthTokenPersistence _persistence;
