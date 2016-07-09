@@ -1,4 +1,18 @@
 <%--
+    view.jsp: A customized view.jsp for Liferay's web-form-
+    portlet. Customized sections are marked with the comment: 
+    // Customized .
+    
+    The following functions have been customized: 
+    
+    - disabled alert messages
+    - use aui's required attribute for fields
+        
+    Created:    2016-07-09 13:26 by Christian Berndt
+    Modified:   2016-07-09 13:26 by Christian Berndt
+    Version:    1.0.0
+--
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -74,9 +88,11 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 			</c:if>
 
 			<c:if test="<%= !fieldOptional %>">
+<%-- Customized: disabled
 				<div class="hide" id="<portlet:namespace />fieldOptionalError<%= fieldName %>">
 					<span class="alert alert-error"><liferay-ui:message key="this-field-is-mandatory" /></span>
 				</div>
+--%>                
 			</c:if>
 
 			<c:choose>
@@ -84,13 +100,19 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 					<p class="format-paragraph" id="<portlet:namespace /><%= fieldName %>"><%= HtmlUtil.escape(fieldParagraph) %></p>
 				</c:when>
 				<c:when test='<%= fieldType.equals("text") %>'>
-					<aui:input cssClass='<%= fieldOptional ? "optional" : StringPool.BLANK %>' label="<%= HtmlUtil.escape(fieldLabel) %>" name="<%= fieldName %>" value="<%= HtmlUtil.escape(fieldValue) %>" />
+<%-- Customized: use required attribute --%>               
+                    <aui:input cssClass='<%= fieldOptional ? "optional" : StringPool.BLANK %>' label="<%= HtmlUtil.escape(fieldLabel) %>" name="<%= fieldName %>" value="<%= HtmlUtil.escape(fieldValue) %>" required="<%= !fieldOptional %>"/>
+<%--                     <aui:input cssClass='<%= fieldOptional ? "optional" : StringPool.BLANK %>' label="<%= HtmlUtil.escape(fieldLabel) %>" name="<%= fieldName %>" value="<%= HtmlUtil.escape(fieldValue) %>" /> --%>
 				</c:when>
 				<c:when test='<%= fieldType.equals("textarea") %>'>
-					<aui:input cssClass='<%= (fieldOptional ? "optional" : StringPool.BLANK) %>' label="<%= HtmlUtil.escape(fieldLabel) %>" name="<%= fieldName %>" type="textarea" value="<%= HtmlUtil.escape(fieldValue) %>" wrap="soft" wrapperCssClass="lfr-textarea-container" />
+<%-- Customized: use required attribute --%>               
+                    <aui:input cssClass='<%= (fieldOptional ? "optional" : StringPool.BLANK) %>' label="<%= HtmlUtil.escape(fieldLabel) %>" name="<%= fieldName %>" type="textarea" value="<%= HtmlUtil.escape(fieldValue) %>" wrap="soft" wrapperCssClass="lfr-textarea-container" required="<%= !fieldOptional %>" />
+<%--                     <aui:input cssClass='<%= (fieldOptional ? "optional" : StringPool.BLANK) %>' label="<%= HtmlUtil.escape(fieldLabel) %>" name="<%= fieldName %>" type="textarea" value="<%= HtmlUtil.escape(fieldValue) %>" wrap="soft" wrapperCssClass="lfr-textarea-container" /> --%>
 				</c:when>
 				<c:when test='<%= fieldType.equals("checkbox") %>'>
-					<aui:input cssClass='<%= fieldOptional ? "optional" : StringPool.BLANK %>' label="<%= HtmlUtil.escape(fieldLabel) %>" name="<%= fieldName %>" type="checkbox" value="<%= GetterUtil.getBoolean(fieldValue) %>" />
+<%-- Customized: use required attribute --%>               
+                    <aui:input cssClass='<%= fieldOptional ? "optional" : StringPool.BLANK %>' label="<%= HtmlUtil.escape(fieldLabel) %>" name="<%= fieldName %>" type="checkbox" value="<%= GetterUtil.getBoolean(fieldValue) %>" required="<%= !fieldOptional %>" />
+<%--                     <aui:input cssClass='<%= fieldOptional ? "optional" : StringPool.BLANK %>' label="<%= HtmlUtil.escape(fieldLabel) %>" name="<%= fieldName %>" type="checkbox" value="<%= GetterUtil.getBoolean(fieldValue) %>" /> --%>
 				</c:when>
 				<c:when test='<%= fieldType.equals("radio") %>'>
 					<aui:field-wrapper cssClass='<%= fieldOptional ? "optional" : StringPool.BLANK %>' label="<%= HtmlUtil.escape(fieldLabel) %>" name="<%= fieldName %>">
@@ -108,7 +130,9 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 					</aui:field-wrapper>
 				</c:when>
 				<c:when test='<%= fieldType.equals("options") %>'>
-					<aui:select cssClass='<%= fieldOptional ? "optional" : StringPool.BLANK %>' label="<%= HtmlUtil.escape(fieldLabel) %>" name="<%= fieldName %>">
+<%-- Customized: use required attribute --%>               
+                    <aui:select cssClass='<%= fieldOptional ? "optional" : StringPool.BLANK %>' label="<%= HtmlUtil.escape(fieldLabel) %>" name="<%= fieldName %>" required="<%= !fieldOptional %>">
+<%--                     <aui:select cssClass='<%= fieldOptional ? "optional" : StringPool.BLANK %>' label="<%= HtmlUtil.escape(fieldLabel) %>" name="<%= fieldName %>"> --%>
 
 						<%
 						for (String fieldOptionValue : WebFormUtil.split(fieldOptions)) {
