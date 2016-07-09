@@ -51,8 +51,8 @@ String[] sections = AdminUtil.unescapeSections(BeanPropertiesUtil.getString(kbAr
 	<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_SAVE_DRAFT %>" />
 
 	<liferay-ui:error exception="<%= DuplicateFileException.class %>" message="please-enter-a-unique-document-name" />
-	<liferay-ui:error exception="<%= DuplicateKBArticleUrlTitleException.class %>" message="please-enter-a-unique-friendly-url" />
 	<liferay-ui:error exception="<%= FileNameException.class %>" message="please-enter-a-file-with-a-valid-file-name" />
+	<liferay-ui:error exception="<%= KBArticleUrlTitleException.MustNotBeDuplicate.class %>" message="please-enter-a-unique-friendly-url" />
 
 	<liferay-ui:error exception="<%= FileSizeException.class %>">
 
@@ -69,8 +69,21 @@ String[] sections = AdminUtil.unescapeSections(BeanPropertiesUtil.getString(kbAr
 		<liferay-ui:message arguments="<%= fileMaxSize %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
 	</liferay-ui:error>
 
-	<liferay-ui:error exception="<%= InvalidKBArticleUrlTitleException.class %>" message="please-enter-a-friendly-url-that-starts-with-a-slash-and-contains-alphanumeric-characters-dashes-and-underscores" />
-	<liferay-ui:error exception="<%= KBArticleContentException.class %>" message="please-enter-valid-content" />
+	<liferay-ui:error exception="<%= KBArticleUrlTitleException.MustNotContainInvalidCharacters.class %>" message="please-enter-a-friendly-url-that-starts-with-a-slash-and-contains-alphanumeric-characters-dashes-and-underscores" />
+
+	<liferay-ui:error exception="<%= KBArticleUrlTitleException.MustNotExceedMaximumSize.class %>">
+
+		<%
+		int friendlyURLMaxLength = ModelHintsUtil.getMaxLength(KBArticle.class.getName(), "urlTitle");
+		%>
+
+		<liferay-ui:message arguments="<%= String.valueOf(friendlyURLMaxLength) %>" key="please-enter-a-friendly-url-with-fewer-than-x-characters" />
+	</liferay-ui:error>
+
+	<liferay-ui:error exception="<%= KBArticleContentException.class %>">
+		<liferay-ui:message arguments='<%= ModelHintsUtil.getMaxLength(KBArticle.class.getName(), "urlTitle") %>' key="please-enter-valid-content" />
+	</liferay-ui:error>
+
 	<liferay-ui:error exception="<%= KBArticleSourceURLException.class %>" message="please-enter-a-valid-source-url" />
 	<liferay-ui:error exception="<%= KBArticleTitleException.class %>" message="please-enter-a-valid-title" />
 	<liferay-ui:error exception="<%= NoSuchFileException.class %>" message="the-document-could-not-be-found" />
@@ -217,50 +230,55 @@ String[] sections = AdminUtil.unescapeSections(BeanPropertiesUtil.getString(kbAr
 </aui:script>
 
 <aui:script use="aui-base,event-input">
+	<c:if test="<%= kbArticle == null %>">
+		var titleInput = A.one('#<portlet:namespace />title');
+		var urlTitleInput = A.one('#<portlet:namespace />urlTitle');
+
+		var urlTitleCustomized = false;
+
+		titleInput.on(
+			'input',
+			function(event) {
+				if (!urlTitleCustomized) {
+					var urlTitle = titleInput.val();
+
+					urlTitle = urlTitle.replace(/[^a-zA-Z0-9_-]/g, '-');
+
+					if (urlTitle[0] === '-') {
+						urlTitle = urlTitle.replace(/^-+/, '');
+					}
+
+					urlTitle = urlTitle.replace(/--+/g, '-');
+
+					urlTitleInput.val('/' + urlTitle.toLowerCase());
+				}
+			}
+		);
+
+		urlTitleInput.on(
+			'input',
+			function() {
+				urlTitleCustomized = true;
+			}
+		);
+	</c:if>
+
 	var form = A.one('#<portlet:namespace />fm');
-	var titleInput = A.one('#<portlet:namespace />title');
-	var urlTitleInput = A.one('#<portlet:namespace />urlTitle');
 
 	var publishButton = form.one('#<portlet:namespace />publish');
 
-	var urlTitleCustomized = false;
+	if (publishButton) {
+		publishButton.on(
+			'click',
+			function() {
+				var workflowActionInput = form.one('#<portlet:namespace />workflowAction');
 
-	titleInput.on(
-		'input',
-		function(event) {
-			if (!urlTitleCustomized) {
-				var urlTitle = titleInput.val();
-
-				urlTitle = urlTitle.replace(/[^a-zA-Z0-9_-]/g, '-');
-
-				if (urlTitle[0] === '-') {
-					urlTitle = urlTitle.replace(/^-+/, '');
+				if (workflowActionInput) {
+					workflowActionInput.val('<%= WorkflowConstants.ACTION_PUBLISH %>');
 				}
-
-				urlTitle = urlTitle.replace(/--+/g, '-');
-
-				urlTitleInput.val('/' + urlTitle.toLowerCase());
 			}
-		}
-	);
-
-	urlTitleInput.on(
-		'input',
-		function() {
-			urlTitleCustomized = true;
-		}
-	);
-
-	publishButton.on(
-		'click',
-		function() {
-			var workflowActionInput = form.one('#<portlet:namespace />workflowAction');
-
-			if (workflowActionInput) {
-				workflowActionInput.val('<%= WorkflowConstants.ACTION_PUBLISH %>');
-			}
-		}
-	);
+		);
+	}
 
 	form.on(
 		'submit',

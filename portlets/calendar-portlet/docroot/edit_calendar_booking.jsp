@@ -47,6 +47,12 @@ int startTimeDay = ParamUtil.getInteger(request, "startTimeDay", startTimeJCalen
 int startTimeHour = ParamUtil.getInteger(request, "startTimeHour", startTimeJCalendar.get(java.util.Calendar.HOUR_OF_DAY));
 int startTimeMinute = ParamUtil.getInteger(request, "startTimeMinute", startTimeJCalendar.get(java.util.Calendar.MINUTE));
 
+int startTimeAmPm = ParamUtil.getInteger(request, "startTimeAmPm");
+
+if (startTimeAmPm == java.util.Calendar.PM) {
+	startTimeHour += 12;
+}
+
 startTimeJCalendar = CalendarFactoryUtil.getCalendar(startTimeYear, startTimeMonth, startTimeDay, startTimeHour, startTimeMinute, 0, 0, calendarBookingTimeZone);
 
 startTimeJCalendar.setFirstDayOfWeek(weekStartsOn + 1);
@@ -66,6 +72,12 @@ int endTimeMonth = ParamUtil.getInteger(request, "endTimeMonth", endTimeJCalenda
 int endTimeDay = ParamUtil.getInteger(request, "endTimeDay", endTimeJCalendar.get(java.util.Calendar.DAY_OF_MONTH));
 int endTimeHour = ParamUtil.getInteger(request, "endTimeHour", endTimeJCalendar.get(java.util.Calendar.HOUR_OF_DAY));
 int endTimeMinute = ParamUtil.getInteger(request, "endTimeMinute", endTimeJCalendar.get(java.util.Calendar.MINUTE));
+
+int endTimeAmPm = ParamUtil.getInteger(request, "endTimeAmPm");
+
+if (endTimeAmPm == java.util.Calendar.PM) {
+	endTimeHour += 12;
+}
 
 endTimeJCalendar = CalendarFactoryUtil.getCalendar(endTimeYear, endTimeMonth, endTimeDay, endTimeHour, endTimeMinute, 0, 0, calendarBookingTimeZone);
 
@@ -115,7 +127,7 @@ if (calendarBooking != null) {
 		recurring = true;
 	}
 
-	recurrence = calendarBooking.getRecurrenceObj();
+	recurrence = RecurrenceUtil.inTimeZone(calendarBooking.getRecurrenceObj(), startTimeJCalendar, calendarBookingTimeZone);
 }
 else if (calendar != null) {
 	JSONObject calendarJSONObject = CalendarUtil.toCalendarJSONObject(themeDisplay, calendar);
@@ -166,6 +178,7 @@ for (long otherCalendarId : otherCalendarIds) {
 	<aui:input name="updateCalendarBookingInstance" type="hidden" />
 
 	<liferay-ui:error exception="<%= CalendarBookingDurationException.class %>" message="please-enter-a-start-date-that-comes-before-the-end-date" />
+	<liferay-ui:error exception="<%= CalendarBookingRecurrenceException.class %>" message="the-last-repeating-date-should-come-after-the-event-start-date" />
 
 	<liferay-ui:asset-categories-error />
 
@@ -177,11 +190,11 @@ for (long otherCalendarId : otherCalendarIds) {
 		<aui:input defaultLanguageId="<%= themeDisplay.getLanguageId() %>" name="title" />
 
 		<div class="<%= allDay ? "allday-class-active" : "" %>" id="<portlet:namespace />startDateContainer">
-			<aui:input ignoreRequestValue="<%= true %>" label="start-date" name="startTime" value="<%= startTimeJCalendar %>" />
+			<aui:input ignoreRequestValue="<%= true %>" label="start-date" name="startTime" timeFormat="<%= timeFormat %>" value="<%= startTimeJCalendar %>" />
 		</div>
 
 		<div class="<%= allDay ? "allday-class-active" : "" %>" id="<portlet:namespace />endDateContainer">
-			<aui:input ignoreRequestValue="<%= true %>" label="end-date" name="endTime" value="<%= endTimeJCalendar %>" />
+			<aui:input ignoreRequestValue="<%= true %>" label="end-date" name="endTime" timeFormat="<%= timeFormat %>" value="<%= endTimeJCalendar %>" />
 		</div>
 
 		<aui:input checked="<%= allDay %>" name="allDay" />
@@ -205,9 +218,18 @@ for (long otherCalendarId : otherCalendarIds) {
 						if ((calendarBooking != null) && (curCalendar.getCalendarId() != calendarId) && (CalendarBookingLocalServiceUtil.getCalendarBookingsCount(curCalendar.getCalendarId(), calendarBooking.getParentCalendarBookingId()) > 0)) {
 							continue;
 						}
+
+						CalendarResource curCalendarResource = curCalendar.getCalendarResource();
+
+						String calendarName = curCalendar.getName(locale);
+						String calendarResourceName = curCalendarResource.getName(locale);
+
+						if (!calendarName.equals(calendarResourceName)) {
+							calendarName = calendarResourceName + StringPool.SPACE + StringPool.DASH + StringPool.SPACE + calendarName;
+						}
 					%>
 
-						<aui:option selected="<%= curCalendar.getCalendarId() == calendarId %>" value="<%= curCalendar.getCalendarId() %>"><%= HtmlUtil.escape(curCalendar.getName(locale)) %></aui:option>
+						<aui:option selected="<%= curCalendar.getCalendarId() == calendarId %>" value="<%= curCalendar.getCalendarId() %>"><%= HtmlUtil.escape(calendarName) %></aui:option>
 
 					<%
 					}
@@ -399,6 +421,20 @@ for (long otherCalendarId : otherCalendarIds) {
 		document.<portlet:namespace />fm.<portlet:namespace />title.value = '<%= HtmlUtil.escapeJS(titleCurrentValue) %>';
 		document.<portlet:namespace />fm.<portlet:namespace />title_<%= themeDisplay.getLanguageId() %>.value = '<%= HtmlUtil.escapeJS(titleCurrentValue) %>';
 	</c:if>
+</aui:script>
+
+<aui:script use="liferay-calendar-interval-selector">
+	new Liferay.IntervalSelector(
+		{
+			containerId: 'meetingEventDate',
+			endDatePickerName: 'endTime',
+			endTimePickerName: 'endTimeTime',
+			namespace: '<portlet:namespace/>',
+			startDatePickerName: 'startTime',
+			startTimePickerName: 'startTimeTime',
+			submitButtonId: 'submit'
+		}
+	);
 </aui:script>
 
 <aui:script use="json,liferay-calendar-date-picker-util,liferay-calendar-list,liferay-calendar-recurrence-util,liferay-calendar-reminders,liferay-calendar-simple-menu">

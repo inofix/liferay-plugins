@@ -14,11 +14,16 @@
 
 package com.liferay.pushnotifications.sender.sms;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.pushnotifications.PushNotificationsException;
+import com.liferay.pushnotifications.messaging.DestinationNames;
 import com.liferay.pushnotifications.sender.PushNotificationsSender;
+import com.liferay.pushnotifications.sender.Response;
 import com.liferay.pushnotifications.util.PortletPropsKeys;
 import com.liferay.pushnotifications.util.PortletPropsValues;
 import com.liferay.pushnotifications.util.PushNotificationsConstants;
@@ -36,8 +41,80 @@ import java.util.Map;
  */
 public class TwilioSMSSender implements PushNotificationsSender {
 
+	public TwilioSMSSender() {
+	}
+
+	public TwilioSMSSender(
+		String accountSID, String authToken, String number,
+		String statusCallback) {
+
+		_accountSID = accountSID;
+		_authToken = authToken;
+		_number = number;
+		_statusCallback = statusCallback;
+	}
+
 	@Override
-	public void reset() {
+	public PushNotificationsSender create(Map<String, Object> configuration) {
+		String accountSID = MapUtil.getString(
+			configuration, PortletPropsKeys.SMS_TWILIO_ACCOUNT_SID, null);
+		String authToken = MapUtil.getString(
+			configuration, PortletPropsKeys.SMS_TWILIO_AUTH_TOKEN, null);
+		String number = MapUtil.getString(
+			configuration, PortletPropsKeys.SMS_TWILIO_NUMBER, null);
+		String statusCallback = MapUtil.getString(
+			configuration, PortletPropsKeys.SMS_TWILIO_STATUS_CALLBACK, null);
+
+		return new TwilioSMSSender(
+			accountSID, authToken, number, statusCallback);
+	}
+
+	public String getAccountSID() throws SystemException {
+		if (Validator.isNull(_accountSID)) {
+			_accountSID = PrefsPropsUtil.getString(
+				PortletPropsKeys.SMS_TWILIO_ACCOUNT_SID,
+				PortletPropsValues.SMS_TWILIO_ACCOUNT_SID);
+		}
+
+		return _accountSID;
+	}
+
+	public String getAuthToken() throws SystemException {
+		if (Validator.isNull(_authToken)) {
+			_authToken = PrefsPropsUtil.getString(
+				PortletPropsKeys.SMS_TWILIO_AUTH_TOKEN,
+				PortletPropsValues.SMS_TWILIO_AUTH_TOKEN);
+		}
+
+		return _authToken;
+	}
+
+	public String getNumber() throws SystemException {
+		if (Validator.isNull(_number)) {
+			_number = PrefsPropsUtil.getString(
+				PortletPropsKeys.SMS_TWILIO_NUMBER,
+				PortletPropsValues.SMS_TWILIO_NUMBER);
+		}
+
+		return _number;
+	}
+
+	public String getStatusCallback() throws SystemException {
+		if (Validator.isNull(_statusCallback)) {
+			_statusCallback = PrefsPropsUtil.getString(
+				PortletPropsKeys.SMS_TWILIO_STATUS_CALLBACK,
+				PortletPropsValues.SMS_TWILIO_STATUS_CALLBACK);
+		}
+
+		return _statusCallback;
+	}
+
+	@Override
+	public synchronized void reset() {
+		_accountSID = null;
+		_authToken = null;
+		_number = null;
+		_statusCallback = null;
 		_twilioRestClient = null;
 	}
 
@@ -64,27 +141,52 @@ public class TwilioSMSSender implements PushNotificationsSender {
 			PushNotificationsConstants.KEY_FROM);
 
 		if (Validator.isNull(from)) {
-			from = PrefsPropsUtil.getString(
-				PortletPropsKeys.SMS_TWILIO_NUMBER,
-				PortletPropsValues.SMS_TWILIO_NUMBER);
+			from = getNumber();
 		}
 
 		for (String phoneNumber : phoneNumbers) {
 			Map<String, String> params = new HashMap<String, String>();
 
-			params.put("To", phoneNumber);
-			params.put("From", from);
 			params.put("Body", body);
+			params.put("From", from);
 
-			smsFactory.create(params);
+			String statusCallback = getStatusCallback();
+
+			if (Validator.isNotNull(statusCallback)) {
+				params.put("StatusCallback", statusCallback);
+			}
+
+			params.put("To", phoneNumber);
+
+			Response response = new TwilioResponse(
+				smsFactory.create(params), payloadJSONObject);
+
+			MessageBusUtil.sendMessage(
+				DestinationNames.PUSH_NOTIFICATION_RESPONSE, response);
 		}
 	}
 
-	protected TwilioRestClient getTwilioRestClient() throws Exception {
+	public void setAccountSID(String accountSID) {
+		_accountSID = accountSID;
+	}
+
+	public void setAuthToken(String authToken) {
+		_authToken = authToken;
+	}
+
+	public void setNumber(String number) {
+		_number = number;
+	}
+
+	public void setStatusCallback(String statusCallback) {
+		_statusCallback = statusCallback;
+	}
+
+	protected synchronized TwilioRestClient getTwilioRestClient()
+		throws Exception {
+
 		if (_twilioRestClient == null) {
-			String accountSID = PrefsPropsUtil.getString(
-				PortletPropsKeys.SMS_TWILIO_ACCOUNT_SID,
-				PortletPropsValues.SMS_TWILIO_ACCOUNT_SID);
+			String accountSID = getAccountSID();
 
 			if (Validator.isNull(accountSID)) {
 				throw new PushNotificationsException(
@@ -92,9 +194,7 @@ public class TwilioSMSSender implements PushNotificationsSender {
 						"portlet.properties");
 			}
 
-			String authToken = PrefsPropsUtil.getString(
-				PortletPropsKeys.SMS_TWILIO_AUTH_TOKEN,
-				PortletPropsValues.SMS_TWILIO_AUTH_TOKEN);
+			String authToken = getAuthToken();
 
 			if (Validator.isNull(authToken)) {
 				throw new PushNotificationsException(
@@ -108,6 +208,10 @@ public class TwilioSMSSender implements PushNotificationsSender {
 		return _twilioRestClient;
 	}
 
+	private String _accountSID;
+	private String _authToken;
+	private String _number;
+	private String _statusCallback;
 	private TwilioRestClient _twilioRestClient;
 
 }

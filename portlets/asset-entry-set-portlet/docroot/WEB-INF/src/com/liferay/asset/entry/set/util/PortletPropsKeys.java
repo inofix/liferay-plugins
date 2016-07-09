@@ -25,8 +25,8 @@ public interface PortletPropsKeys {
 	public static final String ASSET_ENTRY_SET_IMAGE_EXTENSIONS =
 		"asset.entry.set.image.extensions";
 
-	public static final String ASSET_ENTRY_SET_IMAGE_TYPE =
-		"asset.entry.set.image.type";
+	public static final String ASSET_ENTRY_SET_IMAGE_MAX_SIZE =
+		"asset.entry.set.image.max.size";
 
 	public static final String ASSET_ENTRY_SET_IMAGE_TYPES =
 		"asset.entry.set.image.types";
@@ -41,5 +41,7 @@ public interface PortletPropsKeys {
 		"asset.entry.set.shared.to.json.object.keys";
 
 	public static final String ASSET_ENTRY_SET_TYPES = "asset.entry.set.types";
+
+	public static final String GEONAMES_USERNAME = "geonames.username";
 
 }

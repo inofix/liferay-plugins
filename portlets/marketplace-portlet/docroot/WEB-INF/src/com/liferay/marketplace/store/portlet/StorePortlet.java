@@ -14,32 +14,27 @@
 
 package com.liferay.marketplace.store.portlet;
 
+import com.liferay.marketplace.configuration.PortletPropsValues;
+import com.liferay.marketplace.constants.MarketplaceConstants;
+import com.liferay.marketplace.constants.PortletKeys;
+import com.liferay.marketplace.constants.WebKeys;
 import com.liferay.marketplace.model.App;
+import com.liferay.marketplace.oauth.util.OAuthUtil;
 import com.liferay.marketplace.service.AppLocalServiceUtil;
 import com.liferay.marketplace.service.AppServiceUtil;
 import com.liferay.marketplace.util.MarketplaceLicenseUtil;
-import com.liferay.marketplace.util.MarketplaceUtil;
-import com.liferay.marketplace.util.PortletPropsValues;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.expando.service.ExpandoValueLocalServiceUtil;
-import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-
-import java.net.URL;
 
 import java.util.Map;
 import java.util.Set;
@@ -47,50 +42,38 @@ import java.util.Set;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.WindowState;
+
+import org.scribe.model.OAuthRequest;
+import org.scribe.model.Response;
+import org.scribe.model.Token;
+import org.scribe.model.Verb;
 
 /**
  * @author Ryan Park
  */
-public class StorePortlet extends MVCPortlet {
+public class StorePortlet extends RemoteMVCPortlet {
 
 	public void downloadApp(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		long appPackageId = ParamUtil.getLong(actionRequest, "appPackageId");
+		boolean unlicensed = ParamUtil.getBoolean(actionRequest, "unlicensed");
 
-		String token = ParamUtil.getString(actionRequest, "token");
-		long remoteAppId = ParamUtil.getLong(actionRequest, "appId");
-		String url = ParamUtil.getString(actionRequest, "url");
-		String version = ParamUtil.getString(actionRequest, "version");
-
-		if (!url.startsWith(PortletPropsValues.MARKETPLACE_URL)) {
-			JSONObject jsonObject = getAppJSONObject(remoteAppId);
-
-			jsonObject.put("cmd", "downloadApp");
-			jsonObject.put("message", "fail");
-
-			writeJSON(actionRequest, actionResponse, jsonObject);
-
-			return;
-		}
-
-		url = getRemoteAppPackageURL(
-			themeDisplay.getCompanyId(), themeDisplay.getUserId(), token, url);
-
-		URL urlObj = new URL(url);
-
-		File tempFile = null;
+		File file = null;
 
 		try {
-			InputStream inputStream = urlObj.openStream();
+			file = FileUtil.createTempFile();
 
-			tempFile = FileUtil.createTempFile();
+			downloadApp(
+				actionRequest, actionResponse, appPackageId, unlicensed, file);
 
-			FileUtil.write(tempFile, inputStream);
-
-			App app = AppServiceUtil.updateApp(remoteAppId, version, tempFile);
+			App app = AppServiceUtil.updateApp(file);
 
 			JSONObject jsonObject = getAppJSONObject(app.getRemoteAppId());
 
@@ -100,8 +83,8 @@ public class StorePortlet extends MVCPortlet {
 			writeJSON(actionRequest, actionResponse, jsonObject);
 		}
 		finally {
-			if (tempFile != null) {
-				tempFile.delete();
+			if (file != null) {
+				file.delete();
 			}
 		}
 	}
@@ -120,49 +103,52 @@ public class StorePortlet extends MVCPortlet {
 		writeJSON(actionRequest, actionResponse, jsonObject);
 	}
 
-	public void getBundledApps(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		Map<String, String> bundledApps = AppLocalServiceUtil.getBundledApps();
-
-		JSONObject bundledAppJsonObject = JSONFactoryUtil.createJSONObject();
-
-		Set<String> keys = bundledApps.keySet();
-
-		for (String key : keys) {
-			bundledAppJsonObject.put(key, bundledApps.get(key));
-		}
-
-		jsonObject.put("bundledApps", bundledAppJsonObject);
-
-		jsonObject.put("cmd", "getBundledApps");
-		jsonObject.put("message", "success");
-
-		writeJSON(actionRequest, actionResponse, jsonObject);
-	}
-
-	public void getClientId(
+	public void getPrepackagedApps(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String token = ParamUtil.getString(actionRequest, "token");
+		OAuthRequest oAuthRequest = new OAuthRequest(
+			Verb.POST, getServerPortletURL());
 
-		String encodedClientId = MarketplaceUtil.encodeClientId(
-			themeDisplay.getCompanyId(), themeDisplay.getUserId(), token);
+		setBaseRequestParameters(actionRequest, actionResponse, oAuthRequest);
+
+		addOAuthParameter(oAuthRequest, "p_p_lifecycle", "1");
+		addOAuthParameter(
+			oAuthRequest, "p_p_state", WindowState.NORMAL.toString());
+
+		String serverNamespace = getServerNamespace();
+
+		addOAuthParameter(
+			oAuthRequest, serverNamespace.concat("compatibility"),
+			String.valueOf(ReleaseInfo.getBuildNumber()));
+		addOAuthParameter(
+			oAuthRequest, serverNamespace.concat("javax.portlet.action"),
+			"getPrepackagedApps");
+
+		Map<String, String> prepackagedApps =
+			AppLocalServiceUtil.getPrepackagedApps();
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("cmd", "getClientId");
-		jsonObject.put("clientId", encodedClientId);
-		jsonObject.put("token", token);
+		Set<String> keys = prepackagedApps.keySet();
 
-		writeJSON(actionRequest, actionResponse, jsonObject);
+		for (String key : keys) {
+			jsonObject.put(key, prepackagedApps.get(key));
+		}
+
+		addOAuthParameter(
+			oAuthRequest, serverNamespace.concat("prepackagedApps"),
+			jsonObject.toString());
+
+		Response response = getResponse(themeDisplay.getUser(), oAuthRequest);
+
+		JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
+			response.getBody());
+
+		writeJSON(actionRequest, actionResponse, responseJSONObject);
 	}
 
 	public void installApp(
@@ -182,25 +168,15 @@ public class StorePortlet extends MVCPortlet {
 	}
 
 	@Override
-	public void processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws IOException {
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
 
 		try {
-			if (!isProcessActionRequest(actionRequest)) {
-				return;
-			}
-
-			if (!callActionMethod(actionRequest, actionResponse)) {
-				return;
-			}
+			super.render(renderRequest, renderResponse);
 		}
 		catch (PortletException pe) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			jsonObject.put("message", "fail");
-
-			writeJSON(actionRequest, actionResponse, jsonObject);
+			include("/store/error.jsp", renderRequest, renderResponse);
 		}
 	}
 
@@ -224,43 +200,21 @@ public class StorePortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String token = ParamUtil.getString(actionRequest, "token");
-		long remoteAppId = ParamUtil.getLong(actionRequest, "appId");
-		String version = ParamUtil.getString(actionRequest, "version");
-		String url = ParamUtil.getString(actionRequest, "url");
+		long appPackageId = ParamUtil.getLong(actionRequest, "appPackageId");
+		boolean unlicensed = ParamUtil.getBoolean(actionRequest, "unlicensed");
 		String orderUuid = ParamUtil.getString(actionRequest, "orderUuid");
 		String productEntryName = ParamUtil.getString(
 			actionRequest, "productEntryName");
 
-		if (!url.startsWith(PortletPropsValues.MARKETPLACE_URL)) {
-			JSONObject jsonObject = getAppJSONObject(remoteAppId);
-
-			jsonObject.put("cmd", "downloadApp");
-			jsonObject.put("message", "fail");
-
-			writeJSON(actionRequest, actionResponse, jsonObject);
-
-			return;
-		}
-
-		url = getRemoteAppPackageURL(
-			themeDisplay.getCompanyId(), themeDisplay.getUserId(), token, url);
-
-		URL urlObj = new URL(url);
-
-		File tempFile = null;
+		File file = null;
 
 		try {
-			InputStream inputStream = urlObj.openStream();
+			file = FileUtil.createTempFile();
 
-			tempFile = FileUtil.createTempFile();
+			downloadApp(
+				actionRequest, actionResponse, appPackageId, unlicensed, file);
 
-			FileUtil.write(tempFile, inputStream);
-
-			AppServiceUtil.updateApp(remoteAppId, version, tempFile);
+			App app = AppServiceUtil.updateApp(file);
 
 			if (Validator.isNull(orderUuid) &&
 				Validator.isNotNull(productEntryName)) {
@@ -273,9 +227,9 @@ public class StorePortlet extends MVCPortlet {
 					orderUuid, productEntryName);
 			}
 
-			AppServiceUtil.installApp(remoteAppId);
+			AppServiceUtil.installApp(app.getRemoteAppId());
 
-			JSONObject jsonObject = getAppJSONObject(remoteAppId);
+			JSONObject jsonObject = getAppJSONObject(app.getRemoteAppId());
 
 			jsonObject.put("cmd", "updateApp");
 			jsonObject.put("message", "success");
@@ -283,95 +237,70 @@ public class StorePortlet extends MVCPortlet {
 			writeJSON(actionRequest, actionResponse, jsonObject);
 		}
 		finally {
-			if (tempFile != null) {
-				tempFile.delete();
+			if (file != null) {
+				file.delete();
 			}
 		}
-	}
-
-	public void updateClientId(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (!themeDisplay.isSignedIn()) {
-			return;
-		}
-
-		String clientId = ParamUtil.getString(actionRequest, "clientId");
-		String token = ParamUtil.getString(actionRequest, "token");
-
-		String decodedClientId = MarketplaceUtil.decodeClientId(
-			clientId, token);
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put("cmd", "updateClientId");
-
-		if (Validator.isNull(decodedClientId)) {
-			jsonObject.put("message", "fail");
-
-			writeJSON(actionRequest, actionResponse, jsonObject);
-
-			return;
-		}
-
-		ExpandoValueLocalServiceUtil.addValue(
-			themeDisplay.getCompanyId(), User.class.getName(), "MP", "clientId",
-			themeDisplay.getUserId(), decodedClientId);
-
-		jsonObject.put("message", "success");
-
-		writeJSON(actionRequest, actionResponse, jsonObject);
 	}
 
 	@Override
-	protected boolean callActionMethod(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortletException {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		if (Validator.isNull(cmd)) {
-			return super.callActionMethod(actionRequest, actionResponse);
-		}
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
 
 		try {
-			if (cmd.equals("downloadApp")) {
-				downloadApp(actionRequest, actionResponse);
-			}
-			else if (cmd.equals("getApp")) {
-				getApp(actionRequest, actionResponse);
-			}
-			else if (cmd.equals("getBundledApps")) {
-				getBundledApps(actionRequest, actionResponse);
-			}
-			else if (cmd.equals("getClientId")) {
-				getClientId(actionRequest, actionResponse);
-			}
-			else if (cmd.equals("installApp")) {
-				installApp(actionRequest, actionResponse);
-			}
-			else if (cmd.equals("updateApp")) {
-				updateApp(actionRequest, actionResponse);
-			}
-			else if (cmd.equals("updateClientId")) {
-				updateClientId(actionRequest, actionResponse);
-			}
-			else if (cmd.equals("uninstallApp")) {
-				uninstallApp(actionRequest, actionResponse);
-			}
-			else {
-				return super.callActionMethod(actionRequest, actionResponse);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			Token accessToken = OAuthUtil.getAccessToken(
+				themeDisplay.getUser());
+
+			if (accessToken == null) {
+				include("/store/login.jsp", renderRequest, renderResponse);
+
+				return;
 			}
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception pe) {
+			throw new PortletException(pe);
 		}
 
-		return true;
+		renderRequest.setAttribute(WebKeys.OAUTH_AUTHORIZED, Boolean.TRUE);
+
+		super.doDispatch(renderRequest, renderResponse);
+	}
+
+	protected void downloadApp(
+			PortletRequest portletRequest, PortletResponse portletResponse,
+			long appPackageId, boolean unlicensed, File file)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		OAuthRequest oAuthRequest = new OAuthRequest(
+			Verb.GET, getServerPortletURL());
+
+		setBaseRequestParameters(portletRequest, portletResponse, oAuthRequest);
+
+		String serverNamespace = getServerNamespace();
+
+		addOAuthParameter(
+			oAuthRequest, serverNamespace.concat("appPackageId"),
+			String.valueOf(appPackageId));
+		addOAuthParameter(oAuthRequest, "p_p_lifecycle", "2");
+
+		if (unlicensed) {
+			addOAuthParameter(
+				oAuthRequest, "p_p_resource_id", "serveUnlicensedApp");
+		}
+		else {
+			addOAuthParameter(oAuthRequest, "p_p_resource_id", "serveApp");
+		}
+
+		Response response = getResponse(themeDisplay.getUser(), oAuthRequest);
+
+		FileUtil.write(file, response.getStream());
 	}
 
 	protected JSONObject getAppJSONObject(long remoteAppId) throws Exception {
@@ -395,22 +324,41 @@ public class StorePortlet extends MVCPortlet {
 		return jsonObject;
 	}
 
-	protected String getRemoteAppPackageURL(
-			long companyId, long userId, String token, String url)
-		throws Exception {
-
-		String encodedClientId = MarketplaceUtil.encodeClientId(
-			companyId, userId, token);
-
-		url = HttpUtil.addParameter(
-			url, _PORTLET_NAMESPACE.concat("clientId"), encodedClientId);
-		url = HttpUtil.addParameter(
-			url, _PORTLET_NAMESPACE.concat("token"), token);
-
-		return url;
+	@Override
+	protected String getClientPortletId() {
+		return PortletKeys.STORE;
 	}
 
-	private static final String _PORTLET_NAMESPACE =
-		PortalUtil.getPortletNamespace("12_WAR_osbportlet");
+	@Override
+	protected String getServerPortletId() {
+		return PortletPropsValues.MARKETPLACE_PORTLET_ID;
+	}
+
+	@Override
+	protected String getServerPortletURL() {
+		return PortletPropsValues.MARKETPLACE_URL + "/osb-portlet/mp_server";
+	}
+
+	@Override
+	protected void processPortletParameterMap(
+		PortletRequest portletRequest, PortletResponse portletResponse,
+		Map<String, String[]> parameterMap) {
+
+		parameterMap.put(
+			"clientBuild",
+			new String[] {String.valueOf(MarketplaceConstants.CLIENT_BUILD)});
+
+		if (!parameterMap.containsKey("compatibility")) {
+			parameterMap.put(
+				"compatibility",
+				new String[] {String.valueOf(ReleaseInfo.getBuildNumber())});
+		}
+
+		parameterMap.put(
+			"supportsHotDeploy",
+			new String[] {
+				String.valueOf(ServerDetector.isSupportsHotDeploy())
+			});
+	}
 
 }

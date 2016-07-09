@@ -63,107 +63,11 @@ public class AssetEntrySetServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static com.liferay.asset.entry.set.model.AssetEntrySet addAssetEntrySet(
-		long parentAssetEntrySetId, long creatorClassNameId,
-		long creatorClassPK, java.lang.String payload,
-		boolean privateAssetEntrySet)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .addAssetEntrySet(parentAssetEntrySetId, creatorClassNameId,
-			creatorClassPK, payload, privateAssetEntrySet);
-	}
-
 	public static com.liferay.portal.kernel.json.JSONObject addFileAttachment(
 		java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().addFileAttachment(file);
-	}
-
-	public static com.liferay.asset.entry.set.model.AssetEntrySet deleteAssetEntrySet(
-		long assetEntrySetId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().deleteAssetEntrySet(assetEntrySetId);
-	}
-
-	public static com.liferay.asset.entry.set.model.AssetEntrySet fetchAssetEntrySet(
-		long assetEntrySetId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchAssetEntrySet(assetEntrySetId);
-	}
-
-	public static com.liferay.asset.entry.set.model.AssetEntrySet getAssetEntrySet(
-		long assetEntrySetId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getAssetEntrySet(assetEntrySetId);
-	}
-
-	public static java.util.List<com.liferay.asset.entry.set.model.AssetEntrySet> getNewAssetEntrySets(
-		long createTime, long parentAssetEntrySetId, java.lang.String sharedTo,
-		java.lang.String[] assetTagNames, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .getNewAssetEntrySets(createTime, parentAssetEntrySetId,
-			sharedTo, assetTagNames, start, end);
-	}
-
-	public static java.util.List<com.liferay.asset.entry.set.model.AssetEntrySet> getNewChildAssetEntrySets(
-		long createTime, long parentAssetEntrySetId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .getNewChildAssetEntrySets(createTime,
-			parentAssetEntrySetId, start, end, orderByComparator);
-	}
-
-	public static java.util.List<com.liferay.asset.entry.set.model.AssetEntrySet> getOldAssetEntrySets(
-		long createTime, long parentAssetEntrySetId, java.lang.String sharedTo,
-		java.lang.String[] assetTagNames, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .getOldAssetEntrySets(createTime, parentAssetEntrySetId,
-			sharedTo, assetTagNames, start, end);
-	}
-
-	public static java.util.List<com.liferay.asset.entry.set.model.AssetEntrySet> getOldChildAssetEntrySets(
-		long createTime, long parentAssetEntrySetId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .getOldChildAssetEntrySets(createTime,
-			parentAssetEntrySetId, start, end, orderByComparator);
-	}
-
-	public static com.liferay.asset.entry.set.model.AssetEntrySet likeAssetEntrySet(
-		long assetEntrySetId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().likeAssetEntrySet(assetEntrySetId);
-	}
-
-	public static com.liferay.asset.entry.set.model.AssetEntrySet unlikeAssetEntrySet(
-		long assetEntrySetId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().unlikeAssetEntrySet(assetEntrySetId);
-	}
-
-	public static com.liferay.asset.entry.set.model.AssetEntrySet updateAssetEntrySet(
-		long assetEntrySetId, java.lang.String payload,
-		boolean privateAssetEntrySet)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .updateAssetEntrySet(assetEntrySetId, payload,
-			privateAssetEntrySet);
 	}
 
 	public static void clearService() {
