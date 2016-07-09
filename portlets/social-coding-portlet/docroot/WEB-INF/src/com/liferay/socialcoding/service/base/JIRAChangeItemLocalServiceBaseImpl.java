@@ -237,7 +237,7 @@ public abstract class JIRAChangeItemLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.socialcoding.service.JIRAChangeItemLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(jiraChangeItemLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(JIRAChangeItem.class);
 
@@ -250,7 +250,7 @@ public abstract class JIRAChangeItemLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.socialcoding.service.JIRAChangeItemLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(jiraChangeItemLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(JIRAChangeItem.class);
 
@@ -262,7 +262,7 @@ public abstract class JIRAChangeItemLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.socialcoding.service.JIRAChangeItemLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(jiraChangeItemLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(JIRAChangeItem.class);
 
@@ -824,7 +824,7 @@ public abstract class JIRAChangeItemLocalServiceBaseImpl
 			sql = PortalUtil.transformSQL(sql);
 
 			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
-					sql, new int[0]);
+					sql);
 
 			sqlUpdate.update();
 		}
